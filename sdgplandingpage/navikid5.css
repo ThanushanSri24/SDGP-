@@ -99,18 +99,18 @@ header { background-color:#fff; box-shadow:0 2px 10px rgba(0,0,0,.1); position:s
 .about::after { content:""; position:absolute; width:260px; height:260px; background:radial-gradient(circle, rgba(16,185,129,0.12) 0%, rgba(16,185,129,0) 70%); bottom:-90px; left:-60px; }
 .about .container { position:relative; z-index:1; }
 .about-grid { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr); gap:32px; align-items:stretch; }
-.about-card { background:linear-gradient(135deg,#1d4ed8 0%, #2563eb 80%); color:#fff; border-radius:28px; padding:44px; box-shadow:0 25px 45px rgba(15,23,42,0.35); position:relative; overflow:hidden; }
+.about-card { background:linear-gradient(135deg,#122d78 0%, #2563eb 80%); color:#fff; border-radius:28px; padding:44px; box-shadow:0 25px 45px rgba(15,23,42,0.35); position:relative; overflow:hidden; }
 .about-card::after { content:""; position:absolute; width:220px; height:220px; border:36px solid rgba(255,255,255,0.1); border-radius:50%; top:-110px; right:-70px; }
 .about-card > * { position:relative; z-index:1; }
 .about-badge { display:inline-flex; align-items:center; gap:10px; font-size:13px; letter-spacing:0.4em; text-transform:uppercase; font-weight:700; padding:10px 20px; border-radius:999px; border:1px solid rgba(255,255,255,0.5); color:#fff; background:rgba(255,255,255,0.08); margin-bottom:18px; }
 .about-badge i { font-size:16px; letter-spacing:0; }
 .about-card h2 { font-size:36px; line-height:1.25; margin-bottom:18px; font-family:'Poppins','Inter','Segoe UI',sans-serif; }
-.about-card p { color:#e2e8f0; margin-bottom:16px; font-size:18px; }
+.about-card p { color:#e2e8f0; margin-bottom:16px; font-size:22px; font-style: italic;}
 .about-signature { margin-top:28px; display:flex; align-items:center; gap:18px; }
 .signature-mark { width:52px; height:52px; border-radius:14px; border:1px solid rgba(255,255,255,0.4); display:flex; align-items:center; justify-content:center; }
 .signature-mark span { width:24px; height:24px; border-radius:50%; border:2px solid rgba(255,255,255,0.35); }
 .signature-name { font-weight:600; font-size:18px; }
-.signature-note { font-size:13px; color:#cbd5f5; text-transform:uppercase; letter-spacing:.2em; }
+.signature-note { font-size:13px; color:#cbd5f5; text-transform:uppercase; letter-spacing:.2em; margin-bottom:10px; }
 .about-focus { display:flex; flex-direction:column; gap:24px; }
 .focus-card { background:#fff; border-radius:22px; padding:30px; box-shadow:0 15px 30px rgba(15,23,42,0.12); border:1px solid rgba(226,232,240,0.9); }
 .focus-card h3 { font-size:20px; margin-bottom:14px; color:var(--dark); }
