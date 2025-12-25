@@ -25,6 +25,12 @@ export default function AlertScreen() {
             message: "Experiencing heavy traffic delay",
         },
         {
+            id: 3,
+            icon: Wrench,
+            text: "Mechanical issue",
+            message: "Van has a mechanical issue",
+        },
+        {
             
         }
     ]
