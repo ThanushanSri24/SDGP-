@@ -10,6 +10,12 @@ export default function AlertScreen() {
     const [selectedAlert, setSelectedAlert] = useState(null);
     const [customMessage, setCustomMessage] = useState("");
     const maxLength = 100;
+
+    const quickAlerts = [
+        {
+            id:
+        }
+    ]
 }
 
 
