@@ -43,9 +43,13 @@ export default function AlertScreen() {
            message: "Accident on route - expext delays",
         },
         {
-            
-        }
-    ]
+            id: 6,
+            icon: CheckCircle,
+            text: "All students dropped off",
+            message: "All students have been dropped off",
+        },
+    ];
+    
 }
 
 
