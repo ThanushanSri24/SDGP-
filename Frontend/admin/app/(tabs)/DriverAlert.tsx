@@ -31,6 +31,12 @@ export default function AlertScreen() {
             message: "Van has a mechanical issue",
         },
         {
+            id: 4,
+            icon: Cloud,
+            text: "Delay due to weather",
+            message: "Delay due to weather conditions",
+        },
+        {
             
         }
     ]
