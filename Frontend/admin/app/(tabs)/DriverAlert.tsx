@@ -9,6 +9,7 @@ export default function AlertScreen() {
     const insets = useSafeAreaInsets();
     const [selectedAlert, setSelectedAlert] = useState(null);
     const [customMessage, setCustomMessage] = useState("");
+    const maxLength = 100;
 }
 
 
