@@ -37,6 +37,12 @@ export default function AlertScreen() {
             message: "Delay due to weather conditions",
         },
         {
+           id: 5,
+           icon: AlertCircle,
+           text: "Accident", 
+           message: "Accident on route - expext delays",
+        },
+        {
             
         }
     ]
