@@ -19,6 +19,12 @@ export default function AlertScreen() {
             message: "Running 1 0 mins late",
         },
         {
+            id: 2,
+            icon: TrafficCone,
+            text: "Heavy traffic delay",
+            message: "Experiencing heavy traffic delay",
+        },
+        {
             
         }
     ]
