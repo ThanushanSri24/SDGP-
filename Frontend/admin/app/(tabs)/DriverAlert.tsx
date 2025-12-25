@@ -8,6 +8,7 @@ import { Clock, TrafficCone, Wrench, Cloud, AlertCircle, CheckCircle,
 export default function AlertScreen() {
     const insets = useSafeAreaInsets();
     const [selectedAlert, setSelectedAlert] = useState(null);
+    const [customMessage, setCustomMessage] = useState("");
 }
 
 
