@@ -13,7 +13,13 @@ export default function AlertScreen() {
 
     const quickAlerts = [
         {
-            id:
+            id: 1,
+            icon: Clock,
+            text: "Running 10 mins late",
+            message: "Running 1 0 mins late",
+        },
+        {
+            
         }
     ]
 }
