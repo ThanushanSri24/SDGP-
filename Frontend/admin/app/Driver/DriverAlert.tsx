@@ -49,6 +49,10 @@ export default function AlertScreen() {
             message: "All students have been dropped off",
         },
     ];
+    const handleQuickAlert = (alert) => {
+        setSelectedAlert(alert.id);
+        setCustomMessage("");
+    };
     
 }
 
