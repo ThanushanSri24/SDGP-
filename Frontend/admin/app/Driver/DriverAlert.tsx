@@ -49,6 +49,67 @@ export default function AlertScreen() {
             message: "All students have been dropped off",
         },
     ];
+    // function to handle selection of quick alert options
+    const handleQuickAlert = (alert) => {
+        setSelectedAlert(alert.id);
+        setCustomMessage("");
+    };
+
+    //function to handle custom message option
+    const handleSendAlert = () => {
+        const messageToSend =
+            customMessage.trim() ||
+            quickAlerts.find((a) => a.id === selectedAlert)?.message;
+    
+    //validation if no message
+        if(!messageToSend) {
+            Alert.alert("No message", "Please select an alert or type a message.");
+            return;
+        }
+        
+        //alert popup
+        Alert.alert(
+            "Alert Sent",
+            'Message sent to all parents: "${messageToSend}"',
+            [
+                {
+                    text: "OK",
+                    onPress: () => {
+                        setSelectedAlert(null);
+                        setCustomMessage("");
+                    },
+                },                
+            ],
+        );
+    };
+
+    //Header section of screen
+    return (
+        <View style={{ flex: 1, backgroundColor: "#F9FAFB" }}>
+            <StatusBar style="dark" />
+
+            <View
+                style={{
+                    backgroundColor: "#fff",
+                    paddingTop: insets.top + 20,
+                    paddingHorizontal: 20,
+                    paddingBottom: 16,
+                    borderBottomWidth: 1,
+                    borderBottomColor: "#E5E7EB",
+                }}
+            ></View> 
+            <Text
+                style={{
+                    fontSize: 24,
+                    fontWeight: "bold",
+                    color: "#111827",
+                }}   
+            >
+                Send Parent Alert
+            </Text>
+
+        </View>
+    )
     
 }
 

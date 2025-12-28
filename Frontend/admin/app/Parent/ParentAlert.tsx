@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   },
   text: { fontSize: 20, color: "red" },
 
+
   header: {
     padding: 20,
     flexDirection: "row",
