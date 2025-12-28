@@ -82,6 +82,34 @@ export default function AlertScreen() {
             ],
         );
     };
+
+    //Header section of screen
+    return (
+        <View style={{ flex: 1, backgroundColor: "#F9FAFB" }}>
+            <StatusBar style="dark" />
+
+            <View
+                style={{
+                    backgroundColor: "#fff",
+                    paddingTop: insets.top + 20,
+                    paddingHorizontal: 20,
+                    paddingBottom: 16,
+                    borderBottomWidth: 1,
+                    borderBottomColor: "#E5E7EB",
+                }}
+            ></View> 
+            <Text
+                style={{
+                    fontSize: 24,
+                    fontWeight: "bold",
+                    color: "#111827",
+                }}   
+            >
+                Send Parent Alert
+            </Text>
+
+        </View>
+    )
     
 }
 
