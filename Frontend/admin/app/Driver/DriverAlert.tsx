@@ -67,7 +67,21 @@ export default function AlertScreen() {
             return;
         }
         
-        }
+        //alert popup
+        Alert.alert(
+            "Alert Sent",
+            'Message sent to all parents: "${messageToSend}"',
+            [
+                {
+                    text: "OK",
+                    onPress: () => {
+                        setSelectedAlert(null);
+                        setCustomMessage("");
+                    },
+                },                
+            ],
+        );
+    };
     
 }
 
