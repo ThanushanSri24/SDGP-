@@ -49,6 +49,25 @@ export default function AlertScreen() {
             message: "All students have been dropped off",
         },
     ];
+    // function to handle selection of quick alert options
+    const handleQuickAlert = (alert) => {
+        setSelectedAlert(alert.id);
+        setCustomMessage("");
+    };
+
+    //function to handle custom message option
+    const handleSendAlert = () => {
+        const messageToSend =
+            customMessage.trim() ||
+            quickAlerts.find((a) => a.id === selectedAlert)?.message;
+    
+    //validation if no message
+        if(!messageToSend) {
+            Alert.alert("No message", "Please select an alert or type a message.");
+            return;
+        }
+        
+        }
     
 }
 
