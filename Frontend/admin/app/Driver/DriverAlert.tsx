@@ -179,6 +179,62 @@ export default function AlertScreen() {
                         );
                     })}
                 </View>    
+
+                //custom message section
+                <View style={{ marginTop: 24 }}>
+                    <Text
+                        style={{
+                            fontSize: 16,
+                            color: "#111827",
+                            marginBottom: 12,
+                            fontWeight: "500",
+                        }}
+                    >
+                        Type a custom message below.
+                    </Text>
+
+                    <View
+                        style={{
+                            backgroundColor: "#F3F4F6",
+                            borderRadius: 12,
+                            padding: 16,
+                            minHeight: 120,
+                        }}    
+                    >
+                        <TextInput
+                            style={{
+                                fontSize: 15,
+                                color: "#111827",
+                                flex: 1,
+                                textAlignVertical: "top",
+                            }}    
+                            placeholder="Detour due to closure on street."
+                            placeholderTextColor="#9CA3AF"
+                            multiline
+                            maxLength={maxLength}
+                            value={customMessage}
+                            onChangeText={ (text)  => {
+                                setCustomMessage(text);
+                                if (text.trim() ) {
+                                    setSelectedAlert(null);
+                                }
+                            }}
+                        />
+                        <Text
+                            style={{
+                                fontSize: 14,
+                                color: "#6B7280",
+                                textAlign: "right",
+                                marginTop: 8,
+                            }}
+                        >
+                            {customMessage.length}/{maxLength}
+                        </Text>
+                    </View>
+                </View>
+            </View>
+        </ScrollView>
+        
         
     )
     
