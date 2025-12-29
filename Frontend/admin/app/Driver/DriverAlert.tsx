@@ -40,7 +40,7 @@ export default function AlertScreen() {
            id: 5,
            icon: AlertCircle,
            text: "Accident", 
-           message: "Accident on route - expext delays",
+           message: "Accident on route - expect delays",
         },
         {
             id: 6,
@@ -70,7 +70,7 @@ export default function AlertScreen() {
         //alert popup
         Alert.alert(
             "Alert Sent",
-            'Message sent to all parents: "${messageToSend}"',
+            `Message sent to all parents: "${messageToSend}"`,
             [
                 {
                     text: "OK",
@@ -108,135 +108,176 @@ export default function AlertScreen() {
                 Send Parent Alert
             </Text>
 
-        </View>
+            </View>
 
-        //scrollable content area with "Quick Alerts"
-        <ScrollView
-            style={{ flex: 1 }}
-            contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}
-            showsVerticalScrollIndicator={false}
-        >
-            //Quick alert section
-            <View style={{ padding: 20}}>
-                <Text
-                    style={{
-                        fontSize: 22,
-                        fontWeight: "bold",
-                        color: "#111827",
-                        marginBottom: 20,
-
-                    }}
-                >
-                    Quick Alerts    
-                <Text/>
-
-                //Quick alert grid
-                <View
-                    style={{
-                        flexDirection: "row",
-                        flexWrap: "wrap",
-                        justifyContent: "space-between",
-                    }}
-                >
-                    {quickAlerts.map((alert) => {
-                        const Icon = alert.icon;
-                        const isSelected = selectedAlert === alert.id;
-                        return (
-                            <TouchableOpacity
-                                key={alert.id}
-                                onPress={ () => handleQuickAlert(alert) }
-                                style={{
-                                    width: "48%",
-                                    backgroundColor: isSelected ? "#EFF6FF" : "#F3F4F6",
-                                    borderRadius: 16,
-                                    padding: 20,
-                                    marginBottom: 16,
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    minHeight: 140,
-                                    borderWidth: isSelected ? 2 : 0,
-                                    borderColor: "#2563EB",
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        marginBottom: 12,
-                                    }}  
-                                >
-                                    <Icon size={40} color="#2563EB" strokeWidth={2} />
-                                </View>  
-                                <Text
-                                    style={{
-                                        fontSize: 15,
-                                        fontWeight: "500",
-                                        color: "#111827",
-                                        textAlign: "center",
-                                    }}      
-                                >
-                                    {alert.text}
-                                </Text>  
-                            </TouchableOpacity>          
-                        );
-                    })}
-                </View>    
-
-                //custom message section
-                <View style={{ marginTop: 24 }}>
+            {/*scrollable content area with "Quick Alerts"*/}
+            <ScrollView
+                style={{ flex: 1 }}
+                contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}
+                showsVerticalScrollIndicator={false}
+            >
+                {/*Quick alert section*/}
+                <View style={{ padding: 20}}>
                     <Text
                         style={{
-                            fontSize: 16,
+                            fontSize: 22,
+                            fontWeight: "bold",
                             color: "#111827",
-                            marginBottom: 12,
-                            fontWeight: "500",
+                            marginBottom: 20,
+
                         }}
                     >
-                        Type a custom message below.
+                        Quick Alerts    
                     </Text>
 
+                    {/*Quick alert grid*/}
                     <View
                         style={{
-                            backgroundColor: "#F3F4F6",
-                            borderRadius: 12,
-                            padding: 16,
-                            minHeight: 120,
-                        }}    
+                            flexDirection: "row",
+                            flexWrap: "wrap",
+                            justifyContent: "space-between",
+                        }}
                     >
-                        <TextInput
-                            style={{
-                                fontSize: 15,
-                                color: "#111827",
-                                flex: 1,
-                                textAlignVertical: "top",
-                            }}    
-                            placeholder="Detour due to closure on street."
-                            placeholderTextColor="#9CA3AF"
-                            multiline
-                            maxLength={maxLength}
-                            value={customMessage}
-                            onChangeText={ (text)  => {
-                                setCustomMessage(text);
-                                if (text.trim() ) {
-                                    setSelectedAlert(null);
-                                }
-                            }}
-                        />
+                        {quickAlerts.map((alert) => {
+                            const Icon = alert.icon;
+                            const isSelected = selectedAlert === alert.id;
+                            return (
+                                <TouchableOpacity
+                                    key={alert.id}
+                                    onPress={ () => handleQuickAlert(alert) }
+                                    style={{
+                                        width: "48%",
+                                        backgroundColor: isSelected ? "#EFF6FF" : "#F3F4F6",
+                                        borderRadius: 16,
+                                        padding: 20,
+                                        marginBottom: 16,
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        minHeight: 140,
+                                        borderWidth: isSelected ? 2 : 0,
+                                        borderColor: "#2563EB",
+                                    }}
+                                >
+                                    <View
+                                        style={{
+                                            marginBottom: 12,
+                                        }}  
+                                    >
+                                        <Icon size={40} color="#2563EB" strokeWidth={2} />
+                                    </View>  
+                                    <Text
+                                        style={{
+                                            fontSize: 15,
+                                            fontWeight: "500",
+                                            color: "#111827",
+                                            textAlign: "center",
+                                        }}      
+                                    >
+                                        {alert.text}
+                                    </Text>  
+                                </TouchableOpacity>          
+                            );
+                        })}
+                    </View>    
+
+                    {/*custom message section*/}
+                    <View style={{ marginTop: 24 }}>
                         <Text
                             style={{
-                                fontSize: 14,
-                                color: "#6B7280",
-                                textAlign: "right",
-                                marginTop: 8,
+                                fontSize: 16,
+                                color: "#111827",
+                                marginBottom: 12,
+                                fontWeight: "500",
                             }}
                         >
-                            {customMessage.length}/{maxLength}
+                            Type a custom message below.
                         </Text>
+
+                        <View
+                            style={{
+                                backgroundColor: "#F3F4F6",
+                                borderRadius: 12,
+                                padding: 16,
+                                minHeight: 120,
+                            }}    
+                        >
+                            <TextInput
+                                style={{
+                                    fontSize: 15,
+                                    color: "#111827",
+                                    flex: 1,
+                                    textAlignVertical: "top",
+                                }}    
+                                placeholder="Detour due to closure on street."
+                                placeholderTextColor="#9CA3AF"
+                                multiline
+                                maxLength={maxLength}
+                                value={customMessage}
+                                onChangeText={ (text)  => {
+                                    setCustomMessage(text);
+                                    if (text.trim() ) {
+                                        setSelectedAlert(null);
+                                    }
+                                }}
+                            />
+                            <Text
+                                style={{
+                                    fontSize: 14,
+                                    color: "#6B7280",
+                                    textAlign: "right",
+                                    marginTop: 8,
+                                }}
+                            >
+                                {customMessage.length}/{maxLength}
+                            </Text>
+                        </View>
                     </View>
                 </View>
+            </ScrollView>
+
+            {/*Send alert button*/}
+            <View 
+                style={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    backgroundColor: "#fff",
+                    paddingHorizontal: 20,
+                    paddingTop: 16,
+                    paddingBottom: insets.bottom + 16,
+                    borderTopWidth: 1,
+                    borderTopColor: "#E5E7EB",
+                }}        
+            >
+                <TouchableOpacity
+                    onPress={handleSendAlert}
+                    style={{
+                        backgroundColor: "#2563EB",
+                        borderRadius: 12,
+                        paddingVertical: 16,
+                        alignItems: "center",
+                        shadowColor: "#000",
+                        shadowOffset: { width: 0, height: 2},
+                        shadowOpacity: 0.1,
+                        shadowRadius: 4,
+                        elevation: 3,
+                    }}    
+                >
+                    <Text
+                        style={{
+                            color: "#fff",
+                            fontSize: 17,
+                            fontWeight: "bold",
+                        
+                        }}
+                    >
+                        Send Alert
+                    </Text>
+                </TouchableOpacity>
             </View>
-        </ScrollView>
-        
-        
-    )
+        </View>
+    );
     
 }
 
