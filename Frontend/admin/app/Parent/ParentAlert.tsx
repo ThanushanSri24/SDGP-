@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AlertsScreen() {
@@ -35,6 +35,13 @@ export default function AlertsScreen() {
   //Mark all as read function
   const markAllAsRead = () => {
     setNotfications(notifications.map((n) => ({ ...n, read: true })));
+  };
+
+  //Mark one as read
+  const markOneAsRead = (id: number) => {
+    setNotfications(
+      notifications.map((n) => (n.id === id ? { ...n, read: true } : n))
+    );
   };
 
   const now = new Date();
@@ -81,7 +88,11 @@ export default function AlertsScreen() {
       {/*Show the notification list*/}
       <View style={styles.alertList}>
         {notifications.map((item) => (
-          <View key={item.id} style={styles.alertBox}>
+          <TouchableOpacity
+            key={item.id}
+            style={styles.alertBox}
+            onPress={() => markOneAsRead(item.id)}
+          >
             <View>
               <Text
                 style={[
@@ -94,7 +105,7 @@ export default function AlertsScreen() {
               <Text style={styles.alertMessage}>{item.message}</Text>
             </View>
             {!item.read && <View style={styles.unreadDot} />}
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </SafeAreaView>
