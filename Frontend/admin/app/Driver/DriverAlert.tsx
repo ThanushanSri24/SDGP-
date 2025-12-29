@@ -97,7 +97,7 @@ export default function AlertScreen() {
                     borderBottomWidth: 1,
                     borderBottomColor: "#E5E7EB",
                 }}
-            ></View> 
+            >
             <Text
                 style={{
                     fontSize: 24,
@@ -109,6 +109,77 @@ export default function AlertScreen() {
             </Text>
 
         </View>
+
+        //scrollable content area with "Quick Alerts"
+        <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}
+            showsVerticalScrollIndicator={false}
+        >
+            //Quick alert section
+            <View style={{ padding: 20}}>
+                <Text
+                    style={{
+                        fontSize: 22,
+                        fontWeight: "bold",
+                        color: "#111827",
+                        marginBottom: 20,
+
+                    }}
+                >
+                    Quick Alerts    
+                <Text/>
+
+                //Quick alert grid
+                <View
+                    style={{
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    {quickAlerts.map((alert) => {
+                        const Icon = alert.icon;
+                        const isSelected = selectedAlert === alert.id;
+                        return (
+                            <TouchableOpacity
+                                key={alert.id}
+                                onPress={ () => handleQuickAlert(alert) }
+                                style={{
+                                    width: "48%",
+                                    backgroundColor: isSelected ? "#EFF6FF" : "#F3F4F6",
+                                    borderRadius: 16,
+                                    padding: 20,
+                                    marginBottom: 16,
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    minHeight: 140,
+                                    borderWidth: isSelected ? 2 : 0,
+                                    borderColor: "#2563EB",
+                                }}
+                            >
+                                <View
+                                    style={{
+                                        marginBottom: 12,
+                                    }}  
+                                >
+                                    <Icon size={40} color="#2563EB" strokeWidth={2} />
+                                </View>  
+                                <Text
+                                    style={{
+                                        fontSize: 15,
+                                        fontWeight: "500",
+                                        color: "#111827",
+                                        textAlign: "center",
+                                    }}      
+                                >
+                                    {alert.text}
+                                </Text>  
+                            </TouchableOpacity>          
+                        );
+                    })}
+                </View>    
+        
     )
     
 }
