@@ -1,11 +1,10 @@
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import {
     Image,
     StyleSheet,
     Text,
-    TouchableOpacity,
-    View,
+    View
 } from "react-native";
 
 export default function RoleSelectionScreen() {
@@ -23,6 +22,9 @@ export default function RoleSelectionScreen() {
       <Text style={styles.subtitle}>
         Smart and secure school van tracking for everyone
       </Text>
+
+        {/* Section Title */}
+      <Text style={styles.chooseText}>Choose Your Role</Text>
     </View>
   );
 }
@@ -63,4 +65,12 @@ const styles = StyleSheet.create({
     marginTop: 13,
     marginBottom: 30,
   },
+
+  chooseText: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginBottom: 20,
+    marginTop:13,
+  },
+
 });
