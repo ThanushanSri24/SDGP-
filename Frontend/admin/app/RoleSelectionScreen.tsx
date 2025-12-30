@@ -1,10 +1,11 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 import {
     Image,
     StyleSheet,
     Text,
-    View
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 export default function RoleSelectionScreen() {
@@ -23,8 +24,24 @@ export default function RoleSelectionScreen() {
         Smart and secure school van tracking for everyone
       </Text>
 
-        {/* Section Title */}
+      {/* Section Title */}
       <Text style={styles.chooseText}>Choose Your Role</Text>
+
+      {/* Driver Button */}
+      <TouchableOpacity style={[styles.card, styles.driverCard]}>
+        <View style={styles.iconCircleBlue}>
+          <MaterialIcons name="directions-bus" size={26} color="#1E88E5" />
+        </View>
+        <Text style={styles.cardText}>Driver</Text>
+      </TouchableOpacity>
+
+      {/* Parent Button */}
+      <TouchableOpacity style={[styles.card, styles.parentCard]}>
+        <View style={styles.iconCircleYellow}>
+          <Ionicons name="person" size={24} color="#FBC02D" />
+        </View>
+        <Text style={styles.cardText}>Parent</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -37,7 +54,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-   backIcon: {
+  backIcon: {
     position: "absolute",
     top: 50,
     left: 20,
@@ -73,4 +90,49 @@ const styles = StyleSheet.create({
     marginTop:13,
   },
 
+  card: {
+    width: "100%",
+    height: 130,
+    borderRadius: 30,
+    borderWidth: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+
+  driverCard: {
+    borderColor: "#90CAF9",
+    backgroundColor:"#e8f7ffff",
+  },
+
+  parentCard: {
+    borderColor: "#FFF59D",
+    backgroundColor:"#fdfae5ff",
+  },
+
+  iconCircleBlue: {
+    width: 54,
+    height: 54,
+    borderRadius: 22,
+    backgroundColor: "#b2ddfcff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 15,
+  },
+
+  iconCircleYellow: {
+    width:54,
+    height: 54,
+    borderRadius: 22,
+    backgroundColor: "#f2eca9ff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 15,
+  },
+
+  cardText: {
+    fontSize: 17,
+    fontWeight: "600",
+  },
 });
