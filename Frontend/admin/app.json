@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "admin",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.admin",
@@ -49,6 +49,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "7c01cf21-d0c7-4d53-a992-5d74bfde98f2"
+      }
     }
   }
 }

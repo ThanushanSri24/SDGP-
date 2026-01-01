@@ -46,7 +46,7 @@ async function getFCMToken() {
 }
 
 export const unstable_settings = {
-  anchor: '(tabs)',
+  initialRouteName: 'RoleSelectionScreen',
 };
 
 export default function RootLayout() {
@@ -89,7 +89,10 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="RoleSelectionScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Driver" options={{ headerShown: false }} />
+        <Stack.Screen name="Parent" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
       </Stack>
       <StatusBar style="auto" />
