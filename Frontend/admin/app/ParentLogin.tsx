@@ -71,6 +71,37 @@ export default function LoginScreen() {
           <View style={styles.line} />
         </View>
 
+         {/* SOCIAL BUTTONS */}
+        <View style={styles.socialRow}>
+          <TouchableOpacity style={styles.socialButton}>
+            <FontAwesome name="facebook" size={22} color="#1877F2" />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.socialButton}>
+          <Image
+            source={require("../assets/images/google.png")}
+            style={{ width: 40, height: 22 }}
+            resizeMode="contain"
+          />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.socialButton}>
+            <FontAwesome name="apple" size={22} color="#000000" />
+          </TouchableOpacity>
+        </View>
+
+
+        {/* REGISTER */}
+        <View style={styles.registerRow}>
+          <Text style={styles.registerText}>
+            Don’t have an account?{" "}
+          </Text>
+
+          <TouchableOpacity onPress={() => console.log("Go to Register")}>
+            <Text style={styles.registerNow}>Register Now</Text>
+          </TouchableOpacity>
+        </View>
+
        </View>
     </SafeAreaView>
   );
@@ -176,6 +207,40 @@ const styles = StyleSheet.create({
     color: "#6B7280",
     fontSize: 13,
     fontWeight: "500",
+  },
+
+   socialRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 24,
+  },
+  socialButton: {
+    flex: 1,
+    height: 52,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 6,
+  },
+  socialText: {
+    fontSize: 18,
+    fontWeight: "700",
+  },
+  registerRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 200,
+  },
+
+  registerText: {
+    color: "#6B7280",
+  },
+
+  registerNow: {
+    color: "#50bcffff",
+    fontWeight: "700",
   },
 
 });
