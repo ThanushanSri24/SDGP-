@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, TextInput, ScrollView, Alert } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, ScrollView, Alert, Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Clock, TrafficCone, Wrench, Cloud, AlertCircle, CheckCircle,
+import {
+    Clock, TrafficCone, Wrench, Cloud, AlertCircle, CheckCircle,
 } from "lucide-react-native";
 
 export default function AlertScreen() {
@@ -37,10 +38,10 @@ export default function AlertScreen() {
             message: "Delay due to weather conditions",
         },
         {
-           id: 5,
-           icon: AlertCircle,
-           text: "Accident", 
-           message: "Accident on route - expect delays",
+            id: 5,
+            icon: AlertCircle,
+            text: "Accident",
+            message: "Accident on route - expect delays",
         },
         {
             id: 6,
@@ -56,31 +57,63 @@ export default function AlertScreen() {
     };
 
     //function to handle custom message option
-    const handleSendAlert = () => {
+    const handleSendAlert = async () => {
         const messageToSend =
             customMessage.trim() ||
             quickAlerts.find((a) => a.id === selectedAlert)?.message;
-    
-    //validation if no message
-        if(!messageToSend) {
+
+        //validation if no message
+        if (!messageToSend) {
             Alert.alert("No message", "Please select an alert or type a message.");
             return;
         }
-        
-        //alert popup
-        Alert.alert(
-            "Alert Sent",
-            `Message sent to all parents: "${messageToSend}"`,
-            [
-                {
-                    text: "OK",
-                    onPress: () => {
-                        setSelectedAlert(null);
-                        setCustomMessage("");
-                    },
-                },                
-            ],
-        );
+
+        // API Endpoint configuration
+        const API_URL = Platform.select({
+            android: 'http://10.0.2.2:3000/api/trips/alert',
+            ios: 'http://localhost:3000/api/trips/alert',
+            default: 'http://localhost:3000/api/trips/alert',
+        });
+
+        // TODO: Replace with actual logged-in driver ID
+        const TEST_DRIVER_ID = "driver_001";
+
+        try {
+            console.log("Sending alert to:", API_URL);
+            const response = await fetch(API_URL!, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    driverId: TEST_DRIVER_ID,
+                    message: messageToSend,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                Alert.alert(
+                    "Alert Sent",
+                    `Message sent to parents: "${messageToSend}"`,
+                    [
+                        {
+                            text: "OK",
+                            onPress: () => {
+                                setSelectedAlert(null);
+                                setCustomMessage("");
+                            },
+                        },
+                    ],
+                );
+            } else {
+                throw new Error(data.error || "Failed to send alert");
+            }
+        } catch (error: any) {
+            console.error("Alert Error:", error);
+            Alert.alert("Error", error.message || "Could not send alert. Please try again.");
+        }
     };
 
     //Header section of screen
@@ -98,15 +131,15 @@ export default function AlertScreen() {
                     borderBottomColor: "#E5E7EB",
                 }}
             >
-            <Text
-                style={{
-                    fontSize: 24,
-                    fontWeight: "bold",
-                    color: "#111827",
-                }}   
-            >
-                Send Parent Alert
-            </Text>
+                <Text
+                    style={{
+                        fontSize: 24,
+                        fontWeight: "bold",
+                        color: "#111827",
+                    }}
+                >
+                    Send Parent Alert
+                </Text>
 
             </View>
 
@@ -117,7 +150,7 @@ export default function AlertScreen() {
                 showsVerticalScrollIndicator={false}
             >
                 {/*Quick alert section*/}
-                <View style={{ padding: 20}}>
+                <View style={{ padding: 20 }}>
                     <Text
                         style={{
                             fontSize: 22,
@@ -127,7 +160,7 @@ export default function AlertScreen() {
 
                         }}
                     >
-                        Quick Alerts    
+                        Quick Alerts
                     </Text>
 
                     {/*Quick alert grid*/}
@@ -144,7 +177,7 @@ export default function AlertScreen() {
                             return (
                                 <TouchableOpacity
                                     key={alert.id}
-                                    onPress={ () => handleQuickAlert(alert) }
+                                    onPress={() => handleQuickAlert(alert)}
                                     style={{
                                         width: "48%",
                                         backgroundColor: isSelected ? "#EFF6FF" : "#F3F4F6",
@@ -161,24 +194,24 @@ export default function AlertScreen() {
                                     <View
                                         style={{
                                             marginBottom: 12,
-                                        }}  
+                                        }}
                                     >
                                         <Icon size={40} color="#2563EB" strokeWidth={2} />
-                                    </View>  
+                                    </View>
                                     <Text
                                         style={{
                                             fontSize: 15,
                                             fontWeight: "500",
                                             color: "#111827",
                                             textAlign: "center",
-                                        }}      
+                                        }}
                                     >
                                         {alert.text}
-                                    </Text>  
-                                </TouchableOpacity>          
+                                    </Text>
+                                </TouchableOpacity>
                             );
                         })}
-                    </View>    
+                    </View>
 
                     {/*custom message section*/}
                     <View style={{ marginTop: 24 }}>
@@ -199,7 +232,7 @@ export default function AlertScreen() {
                                 borderRadius: 12,
                                 padding: 16,
                                 minHeight: 120,
-                            }}    
+                            }}
                         >
                             <TextInput
                                 style={{
@@ -207,15 +240,15 @@ export default function AlertScreen() {
                                     color: "#111827",
                                     flex: 1,
                                     textAlignVertical: "top",
-                                }}    
+                                }}
                                 placeholder="Detour due to closure on street."
                                 placeholderTextColor="#9CA3AF"
                                 multiline
                                 maxLength={maxLength}
                                 value={customMessage}
-                                onChangeText={ (text)  => {
+                                onChangeText={(text) => {
                                     setCustomMessage(text);
-                                    if (text.trim() ) {
+                                    if (text.trim()) {
                                         setSelectedAlert(null);
                                     }
                                 }}
@@ -236,7 +269,7 @@ export default function AlertScreen() {
             </ScrollView>
 
             {/*Send alert button*/}
-            <View 
+            <View
                 style={{
                     position: "absolute",
                     bottom: 0,
@@ -248,7 +281,7 @@ export default function AlertScreen() {
                     paddingBottom: insets.bottom + 16,
                     borderTopWidth: 1,
                     borderTopColor: "#E5E7EB",
-                }}        
+                }}
             >
                 <TouchableOpacity
                     onPress={handleSendAlert}
@@ -258,18 +291,18 @@ export default function AlertScreen() {
                         paddingVertical: 16,
                         alignItems: "center",
                         shadowColor: "#000",
-                        shadowOffset: { width: 0, height: 2},
+                        shadowOffset: { width: 0, height: 2 },
                         shadowOpacity: 0.1,
                         shadowRadius: 4,
                         elevation: 3,
-                    }}    
+                    }}
                 >
                     <Text
                         style={{
                             color: "#fff",
                             fontSize: 17,
                             fontWeight: "bold",
-                        
+
                         }}
                     >
                         Send Alert
@@ -278,7 +311,7 @@ export default function AlertScreen() {
             </View>
         </View>
     );
-    
+
 }
 
 
