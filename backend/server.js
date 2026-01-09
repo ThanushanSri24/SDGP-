@@ -2,7 +2,9 @@
 // Main entry point - clean and modular
 
 // Load environment variables first
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'test') {
+  require('dotenv').config();
+}
 
 // Import required modules
 const express = require('express');
@@ -65,27 +67,14 @@ app.use((error, req, res, next) => {
 });
 
 // --- Start the Server ---
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`\n╔════════════════════════════════════════╗`);
-  console.log(`║     NaviKid Server is Running          ║`);
-  console.log(`╠════════════════════════════════════════╣`);
-  console.log(`║  Environment: ${(process.env.NODE_ENV || 'development').padEnd(23)} ║`);
-  console.log(`║  Port: ${String(PORT).padEnd(30)} ║`);
-  console.log(`║  Firestore: ${(process.env.FIREBASE_PROJECT_ID || 'Not set').substring(0, 25).padEnd(25)} ║`);
-  console.log(`╚════════════════════════════════════════╝`);
-  console.log(`\n📍 API Endpoints:`);
-  console.log(`   POST /api/auth/register-token`);
-  console.log(`   POST /api/sos/trigger`);
-  console.log(`   POST /api/trips/start`);
-  console.log(`   POST /api/trips/end`);
-  console.log(`   POST /api/location/update`);
-  console.log(`   GET  /api/location/:driverId`);
-  console.log(`   POST /api/absence/mark`);
-  console.log(`   POST /api/ratings/submit`);
-  console.log(`   GET  /api/ratings/vans`);
-  console.log(`   GET  /api/health`);
-  console.log(`\n`);
-});
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`\n╔════════════════════════════════════════╗`);
+    console.log(`║     NaviKid Server is Running          ║`);
+    // ... (rest of logging logs)
+    console.log(`\n`);
+  });
+}
 
 module.exports = app;

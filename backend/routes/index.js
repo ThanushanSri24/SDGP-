@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const authRoutes = require('./authRoutes');
+const userAuthRoutes = require('../auth/authRoutes');
 const sosRoutes = require('./sosRoutes');
 const tripRoutes = require('./tripRoutes');
 const locationRoutes = require('./locationRoutes');
@@ -11,6 +12,7 @@ const ratingRoutes = require('./ratingRoutes');
 const healthRoutes = require('./healthRoutes');
 
 router.use('/auth', authRoutes);
+router.use('/auth', userAuthRoutes);
 router.use('/sos', sosRoutes);
 router.use('/trips', tripRoutes);
 router.use('/location', locationRoutes);
