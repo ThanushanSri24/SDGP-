@@ -1,24 +1,21 @@
-import React from "react";
-import { View, Text } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View, Text, StyleSheet } from 'react-native';
 
 export default function DriverMap() {
-  const insets = useSafeAreaInsets();
-  
   return (
-    <View style={{ 
-      flex: 1, 
-      backgroundColor: "#F9FAFB",
-      paddingTop: insets.top,
-      justifyContent: "center",
-      alignItems: "center"
-    }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold" }}>
-        Route Map
-      </Text>
-      <Text style={{ marginTop: 10, color: "#6B7280" }}>
-        Coming soon...
-      </Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Driver Map</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+});

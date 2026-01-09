@@ -1,223 +1,91 @@
-// server.js - Updated with your specific Firebase project details
+// server.js - Node.js backend for NaviKid School Van Tracker
+// Main entry point - clean and modular
+
+// Load environment variables first
+require('dotenv').config();
 
 // Import required modules
 const express = require('express');
-const admin = require('firebase-admin');
 const cors = require('cors');
-require('dotenv').config(); // Load environment variables
+
+// Import routes
+const routes = require('./routes');
 
 // Initialize Express app
 const app = express();
+
+// --- Middleware ---
 app.use(cors());
 app.use(express.json());
 
-// --- Firebase Admin SDK Initialization ---
-// Use environment variables for security (loaded from .env file)
-const serviceAccount = {
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-};
-
-// Initialize the Firebase Admin SDK with the service account details
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+// Request logging (optional - useful for debugging)
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
 });
 
-// Get a reference to the Firestore database
-const db = admin.firestore();
+// --- Routes ---
+app.use('/api', routes);
 
-// --- API Endpoints ---
-
-// Endpoint 1: Register FCM Token (Updated for your schema)
-app.post('/api/register-token', async (req, res) => {
-  const { userId, role, fcmToken, name, email, phone, assignedVehicleId, associatedDriverId, associatedParentIds } = req.body;
-
-  console.log('Received token registration request:', { userId, role, fcmToken });
-
-  if (!userId || !role || !fcmToken) {
-    return res.status(400).json({ error: 'Missing required fields: userId, role, fcmToken' });
-  }
-
-  try {
-    let collectionName;
-    let documentData = {
-      userId: userId,
-      fcmToken: fcmToken,
-      name: name || null,
-      email: email || null,
-      phone: phone || null,
-      // Add other common fields here if needed
-    };
-
-    if (role === 'driver') {
-      collectionName = 'drivers';
-      documentData.assignedVehicleId = assignedVehicleId || null;
-      documentData.associatedParentIds = associatedParentIds || [];
-      // Add other driver-specific fields as needed based on your schema
-    } else if (role === 'parent') {
-      collectionName = 'parents';
-      documentData.associatedDriverId = associatedDriverId || null;
-      // Add other parent-specific fields as needed based on your schema
-    } else {
-      return res.status(400).json({ error: 'Invalid role. Must be "driver" or "parent".' });
-    }
-
-    const userRef = db.collection(collectionName).doc(userId);
-    await userRef.set(documentData, { merge: true });
-
-    console.log(`Token registered successfully for ${role}: ${userId} in collection ${collectionName}`);
-
-    res.status(200).json({ success: true, message: `${role.charAt(0).toUpperCase() + role.slice(1)} token registered successfully` });
-
-  } catch (error) {
-    console.error('Error registering FCM token:', error);
-    res.status(500).json({ error: 'Failed to register FCM token', details: error.message });
-  }
-});
-
-// Endpoint 2: Trigger Emergency Alert (Updated for your schema)
-app.post('/api/sos', async (req, res) => {
-  const { driverId, message, location } = req.body;
-
-  console.log('Received SOS request:', { driverId, message });
-
-  if (!driverId) {
-    return res.status(400).json({ error: 'Missing required field: driverId' });
-  }
-
-  try {
-    const driverDoc = await db.collection('drivers').doc(driverId).get();
-
-    if (!driverDoc.exists) {
-      console.error(`Driver document not found for ID: ${driverId}`);
-      return res.status(404).json({ error: 'Driver not found' });
-    }
-
-    const driverData = driverDoc.data();
-    console.log('Driver data found:', driverData);
-
-    const associatedParentIds = driverData.associatedParentIds || [];
-
-    if (associatedParentIds.length === 0) {
-      console.warn(`No parents associated with driver ID: ${driverId}`);
-      return res.status(404).json({ error: 'No parents associated with this driver' });
-    }
-
-    console.log(`Found ${associatedParentIds.length} associated parents for driver ${driverId}`);
-
-    const parentDocs = await Promise.all(
-      associatedParentIds.map(parentId => db.collection('parents').doc(parentId).get())
-    );
-
-    const parentTokens = parentDocs
-      .filter(doc => doc.exists)
-      .map(doc => doc.data().fcmToken)
-      .filter(token => token && token.trim() !== '');
-
-    console.log(`Found ${parentTokens.length} valid parent tokens:`, parentTokens);
-
-    if (parentTokens.length === 0) {
-      console.warn(`No valid FCM tokens found for parents associated with driver ID: ${driverId}`);
-      return res.status(404).json({ error: 'No valid parent FCM tokens found' });
-    }
-
-    const messages = parentTokens.map(token => ({
-      token: token,
-      notification: {
-        title: '🚨 EMERGENCY ALERT!',
-        body: message || 'Driver has triggered an emergency alert.',
-      },
-      data: {
-        type: 'EMERGENCY',
-        driverId: driverId,
-        timestamp: new Date().toISOString(),
-        location: location ? JSON.stringify(location) : null,
-      },
-    }));
-
-    const results = await Promise.allSettled(
-      messages.map(msg => admin.messaging().send(msg))
-    );
-
-    const successes = results.filter(r => r.status === 'fulfilled').length;
-    const failures = results.filter(r => r.status === 'rejected').length;
-
-    console.log(`SOS notification sent: ${successes} successful, ${failures} failed.`);
-
-    const alertRef = db.collection('emergencyAlerts').doc();
-    await alertRef.set({
-      alertId: alertRef.id,
-      driverId: driverId,
-      parentIds: associatedParentIds, // Store ALL parent IDs affected
-      message: message || 'Emergency triggered by driver.',
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
-      status: failures === 0 ? 'sent' : (successes > 0 ? 'partially_sent' : 'failed'),
-    });
-
-    console.log(`Emergency alert logged in Firestore with ID: ${alertRef.id}`);
-
-    res.status(200).json({
-      success: true,
-      message: 'SOS alert sent successfully',
-      sentToCount: successes,
-      failedCount: failures,
-      loggedAlertId: alertRef.id,
-    });
-
-  } catch (error) {
-    console.error('Error processing SOS request:', error);
-    res.status(500).json({ error: 'Internal server error while processing SOS', details: error.message });
-  }
-});
-
-// Endpoint 3: Example - Get Driver Info (Optional utility endpoint)
-app.get('/api/driver/:driverId', async (req, res) => {
-  const { driverId } = req.params;
-
-  try {
-    const driverDoc = await db.collection('drivers').doc(driverId).get();
-
-    if (!driverDoc.exists) {
-      return res.status(404).json({ error: 'Driver not found' });
-    }
-
-    res.status(200).json(driverDoc.data());
-  } catch (error) {
-    console.error('Error fetching driver:', error);
-    res.status(500).json({ error: 'Failed to fetch driver', details: error.message });
-  }
-});
-
-// Endpoint 4: Example - Get Parent Info (Optional utility endpoint)
-app.get('/api/parent/:parentId', async (req, res) => {
-  const { parentId } = req.params;
-
-  try {
-    const parentDoc = await db.collection('parents').doc(parentId).get();
-
-    if (!parentDoc.exists) {
-      return res.status(404).json({ error: 'Parent not found' });
-    }
-
-    res.status(200).json(parentDoc.data());
-  } catch (error) {
-    console.error('Error fetching parent:', error);
-    res.status(500).json({ error: 'Failed to fetch parent', details: error.message });
-  }
-});
-
-// Optional: Health check endpoint
+// Legacy endpoints for backward compatibility
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running' });
 });
 
-// --- Start the Server ---
-const PORT = process.env.PORT || 3000; // Use PORT from environment variable or default to 3000
-app.listen(PORT, () => {
-  console.log(`\n--- Server is running ---`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`Port: ${PORT}`);
-  console.log(`Firestore Project: navi-kid-school-van-tracker`); // Using the hardcoded project ID
-  console.log(`------------------------\n`);
+// Legacy register-token endpoint (redirects to new path)
+app.post('/api/register-token', (req, res, next) => {
+  // Forward to new auth route
+  req.url = '/api/auth/register-token';
+  next('route');
 });
+
+// Legacy SOS endpoint (redirects to new path)
+app.post('/api/sos', (req, res, next) => {
+  // Forward to new SOS route
+  req.url = '/api/sos/trigger';
+  next('route');
+});
+
+// --- Error Handling ---
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({
+    error: 'Not Found',
+    message: `Cannot ${req.method} ${req.path}`
+  });
+});
+
+// Global error handler
+app.use((error, req, res, next) => {
+  console.error('Unhandled error:', error);
+  res.status(500).json({
+    error: 'Internal Server Error',
+    message: error.message
+  });
+});
+
+// --- Start the Server ---
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`\n╔════════════════════════════════════════╗`);
+  console.log(`║     NaviKid Server is Running          ║`);
+  console.log(`╠════════════════════════════════════════╣`);
+  console.log(`║  Environment: ${(process.env.NODE_ENV || 'development').padEnd(23)} ║`);
+  console.log(`║  Port: ${String(PORT).padEnd(30)} ║`);
+  console.log(`║  Firestore: ${(process.env.FIREBASE_PROJECT_ID || 'Not set').substring(0, 25).padEnd(25)} ║`);
+  console.log(`╚════════════════════════════════════════╝`);
+  console.log(`\n📍 API Endpoints:`);
+  console.log(`   POST /api/auth/register-token`);
+  console.log(`   POST /api/sos/trigger`);
+  console.log(`   POST /api/trips/start`);
+  console.log(`   POST /api/trips/end`);
+  console.log(`   POST /api/location/update`);
+  console.log(`   GET  /api/location/:driverId`);
+  console.log(`   POST /api/absence/mark`);
+  console.log(`   POST /api/ratings/submit`);
+  console.log(`   GET  /api/ratings/vans`);
+  console.log(`   GET  /api/health`);
+  console.log(`\n`);
+});
+
+module.exports = app;
