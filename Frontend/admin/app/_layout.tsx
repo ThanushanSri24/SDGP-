@@ -4,18 +4,21 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import { useEffect } from 'react';
 import messaging from '@react-native-firebase/messaging';
-import axios from 'axios';
+import { Alert, Platform } from 'react-native';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 // Configure your backend API base URL
-// Use your computer's local IP address for testing on physical devices
-// For emulator: Android uses 10.0.2.2, iOS uses localhost
-const API_BASE_URL = 'http://10.0.2.2:3000'; // Android emulator
-// const API_BASE_URL = 'http://localhost:3000'; // iOS simulator
-// const API_BASE_URL = 'http://YOUR_LOCAL_IP:3000'; // Physical device (replace with your IP)
+// Android emulator uses 10.0.2.2 to reach host machine's localhost
+// iOS simulator uses localhost
+// Physical device: use your computer's actual IP address
+const API_BASE_URL = Platform.select({
+  android: 'http://10.0.2.2:3000',
+  ios: 'http://localhost:3000',
+  default: 'http://localhost:3000',
+});
 
-// Request permission and get FCM token
+// Request notification permission
 async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
   const enabled =
@@ -23,20 +26,37 @@ async function requestUserPermission() {
     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
   if (enabled) {
-    console.log('Authorization status:', authStatus);
+    console.log('Notification permission granted:', authStatus);
     return true;
   }
+  console.log('Notification permission denied');
   return false;
 }
 
-// Get FCM token and send to backend
-async function getFCMToken() {
+// Get FCM token and register with backend
+async function registerFCMToken(userId: string, role: 'driver' | 'parent') {
   try {
     const token = await messaging().getToken();
     if (token) {
       console.log('FCM Token:', token);
-      // Send token to your backend server
-      await axios.post(`${API_BASE_URL}/api/save-token`, { token });
+      
+      // Register token with your backend
+      const response = await fetch(`${API_BASE_URL}/api/register-token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId,
+          role,
+          fcmToken: token,
+        }),
+      });
+      
+      if (response.ok) {
+        console.log('FCM token registered successfully');
+      } else {
+        console.error('Failed to register FCM token:', await response.text());
+      }
+      
       return token;
     }
   } catch (error) {
@@ -54,19 +74,26 @@ export default function RootLayout() {
 
   useEffect(() => {
     // Initialize Firebase messaging
-    const initializeFirebaseMessaging = async () => {
+    const initializeMessaging = async () => {
       const hasPermission = await requestUserPermission();
       if (hasPermission) {
-        await getFCMToken();
+        // TODO: Replace with actual user ID and role from your auth system
+        // await registerFCMToken('user123', 'driver');
       }
     };
 
-    initializeFirebaseMessaging();
+    initializeMessaging();
 
     // Handle foreground messages
     const unsubscribeForeground = messaging().onMessage(async remoteMessage => {
       console.log('Foreground message received:', remoteMessage);
-      // Handle the notification here (e.g., show an alert or update UI)
+      
+      // Show alert for foreground notifications
+      Alert.alert(
+        remoteMessage.notification?.title || 'Notification',
+        remoteMessage.notification?.body || '',
+        [{ text: 'OK' }]
+      );
     });
 
     // Handle background/quit state messages
@@ -76,8 +103,9 @@ export default function RootLayout() {
 
     // Handle token refresh
     const unsubscribeTokenRefresh = messaging().onTokenRefresh(async newToken => {
-      console.log('Token refreshed:', newToken);
-      await axios.post(`${API_BASE_URL}/api/save-token`, { token: newToken });
+      console.log('FCM Token refreshed:', newToken);
+      // TODO: Update token on your backend
+      // await fetch(`${API_BASE_URL}/api/register-token`, { ... });
     });
 
     return () => {
