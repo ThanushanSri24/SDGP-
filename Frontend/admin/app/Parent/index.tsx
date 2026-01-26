@@ -41,6 +41,18 @@ export default function HomeScreen() {
           <Text style={style.routeButtonText}>Select the Route</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Van Status Card */}
+      <View style={style.vanCard}>
+        <Text style={style.vanTitle}>🚐 Van is on the way!</Text>
+
+        <View style={style.vanRow}>
+          <Text style={style.vanLabel}>Estimated arrival</Text>
+          <View style={style.vanTimeBadge}>
+            <Text style={style.vanTimeText}>15 min</Text>
+          </View>
+        </View>
+      </View>
     </View>
   );
 }
@@ -88,5 +100,45 @@ const style = StyleSheet.create({
     fontWeight: "600",
     color: "#000",
     fontSize: 14,
+  },
+
+  vanCard: {
+    backgroundColor: "#F9FAFB",
+    marginTop: 30,
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+  },
+
+  vanTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#000",
+    marginBottom: 12,
+  },
+
+  vanRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  vanLabel: {
+    fontSize: 14,
+    color: "#555",
+  },
+
+  vanTimeBadge: {
+    backgroundColor: "#DCFCE7",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+  },
+
+  vanTimeText: {
+    color: "#166534",
+    fontWeight: "600",
+    fontSize: 13,
   },
 });
