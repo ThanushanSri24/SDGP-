@@ -1,9 +1,16 @@
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react"; // Add useState here
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import MapView from "react-native-maps";
 
 export default function HomeScreen() {
   const router = useRouter();
+
+  const [showMap, setShowMap] = useState(false); // state to show/hide map
+
+  const handleToggleMap = () => {
+    setShowMap(!showMap); // toggle map visibility
+  };
 
   // Greeting & Date Logic
   const now = new Date();
@@ -53,6 +60,40 @@ export default function HomeScreen() {
           </View>
         </View>
       </View>
+
+      {/* Live Tracking Button */}
+      <TouchableOpacity
+        style={{
+          backgroundColor: "#007AFF",
+          paddingVertical: 10,
+          paddingHorizontal: 14,
+          borderRadius: 6,
+          alignItems: "center",
+          marginTop: 20,
+        }}
+        onPress={handleToggleMap}
+      >
+        <Text style={{ color: "#fff", fontWeight: "600" }}>
+          {showMap ? "Hide Live Tracking" : "Show Live Tracking"}
+        </Text>
+      </TouchableOpacity>
+
+      {showMap && (
+        <MapView
+          style={{
+            width: "100%",
+            height: 200,
+            marginTop: 20,
+            borderRadius: 12,
+          }}
+          initialRegion={{
+            latitude: 6.9271,
+            longitude: 79.8612,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          }}
+        />
+      )}
     </View>
   );
 }
