@@ -1,9 +1,23 @@
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
 import MapView, { Marker } from "react-native-maps";
 
 export default function HomeScreen() {
+  // ✅ Driver phone number (static for now)
+  const driverPhoneNumber = "+94702920962";
+  const handleCallDriver = () => {
+    Linking.openURL(`tel:${driverPhoneNumber}`);
+  };
+
   const router = useRouter();
 
   const [showMap, setShowMap] = useState(false);
@@ -99,7 +113,7 @@ export default function HomeScreen() {
 
         {/*Actions*/}
         <View style={styles.vanLocations}></View>
-        <TouchableOpacity style={styles.callButton}>
+        <TouchableOpacity style={styles.callButton} onPress={handleCallDriver}>
           <Text style={styles.callButtonText}>📞 Call Driver</Text>
         </TouchableOpacity>
       </View>
