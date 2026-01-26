@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import {
   Image,
   Linking,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -44,99 +45,107 @@ export default function HomeScreen() {
   });
 
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.greeting}>{greeting}!</Text>
-          <Text style={styles.name}>Amana</Text>
-          <Text style={styles.date}>{todayDate}</Text>
-        </View>
-
-        <TouchableOpacity
-          style={styles.routeButton}
-          onPress={() => router.push("/Parent")}
-        >
-          <Text style={styles.routeButtonText}>Select the Route</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Van Card */}
-      <View style={styles.vanCard}>
-        <Text style={styles.vanTitle}>🚐 Van is on the way!</Text>
-        <View style={styles.vanRow}>
-          <Text style={styles.vanLabel}>Estimated arrival</Text>
-          <View style={styles.vanTimeBadge}>
-            <Text style={styles.vanTimeText}>—</Text>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: 20 }}
+    >
+      <View style={styles.container}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.greeting}>{greeting}!</Text>
+            <Text style={styles.name}>Amana</Text>
+            <Text style={styles.date}>{todayDate}</Text>
           </View>
-        </View>
 
-        {/* Live Tracking Button */}
-        <TouchableOpacity
-          style={styles.liveButton}
-          onPress={() => setShowMap(!showMap)}
-        >
-          <Text style={styles.liveButtonText}>
-            {showMap ? "Hide Live Tracking" : "Show Live Tracking"}
-          </Text>
-        </TouchableOpacity>
-
-        {/* Live tracking active badge*/}
-        {showMap && (
-          <View style={styles.liveBadge}>
-            <View style={styles.liveDot} />
-            <Text style={styles.liveBadgeText}>Live Tracking Active</Text>
-          </View>
-        )}
-
-        {/* Map */}
-        {showMap && (
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: vanLocation.latitude,
-              longitude: vanLocation.longitude,
-              latitudeDelta: 0.05,
-              longitudeDelta: 0.05,
-            }}
+          <TouchableOpacity
+            style={styles.routeButton}
+            onPress={() => router.push("/Parent")}
           >
-            <Marker coordinate={vanLocation}>
-              <Image
-                source={require("../../assets/images/van.png")}
-                style={{ width: 40, height: 40 }}
-                resizeMode="contain"
-              />
-            </Marker>
-          </MapView>
-        )}
-
-        {/* Route Progress Timeline */}
-        <View style={styles.timelineContainer}>
-          <Text style={styles.timelineTitle}>Route Progress</Text>
-          <View style={styles.timelineRow}>
-            {/* School */}
-            <View style={styles.timelineStep}>
-              <View style={[styles.timelineDot, styles.completedDot]} />
-              <Text style={styles.timelineLabel}>School</Text>
-            </View>
-
-            {/* Connector */}
-            <View style={styles.timelineConnector} />
-
-            {/* Home */}
-            <View style={styles.timelineStep}>
-              <View style={[styles.timelineDot, styles.pendingDot]} />
-              <Text style={styles.timelineLabel}>Home</Text>
-            </View>
-          </View>
+            <Text style={styles.routeButtonText}>Select the Route</Text>
+          </TouchableOpacity>
         </View>
 
-        {/* Call Driver Button */}
-        <TouchableOpacity style={styles.callButton} onPress={handleCallDriver}>
-          <Text style={styles.callButtonText}>📞 Call Driver</Text>
-        </TouchableOpacity>
+        {/* Van Card */}
+        <View style={styles.vanCard}>
+          <Text style={styles.vanTitle}>🚐 Van is on the way!</Text>
+          <View style={styles.vanRow}>
+            <Text style={styles.vanLabel}>Estimated arrival</Text>
+            <View style={styles.vanTimeBadge}>
+              <Text style={styles.vanTimeText}>—</Text>
+            </View>
+          </View>
+
+          {/* Live Tracking Button */}
+          <TouchableOpacity
+            style={styles.liveButton}
+            onPress={() => setShowMap(!showMap)}
+          >
+            <Text style={styles.liveButtonText}>
+              {showMap ? "Hide Live Tracking" : "Show Live Tracking"}
+            </Text>
+          </TouchableOpacity>
+
+          {/* Live tracking active badge*/}
+          {showMap && (
+            <View style={styles.liveBadge}>
+              <View style={styles.liveDot} />
+              <Text style={styles.liveBadgeText}>Live Tracking Active</Text>
+            </View>
+          )}
+
+          {/* Map */}
+          {showMap && (
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: vanLocation.latitude,
+                longitude: vanLocation.longitude,
+                latitudeDelta: 0.05,
+                longitudeDelta: 0.05,
+              }}
+            >
+              <Marker coordinate={vanLocation}>
+                <Image
+                  source={require("../../assets/images/van.png")}
+                  style={{ width: 40, height: 40 }}
+                  resizeMode="contain"
+                />
+              </Marker>
+            </MapView>
+          )}
+
+          {/* Route Progress Timeline */}
+          <View style={styles.timelineContainer}>
+            <Text style={styles.timelineTitle}>Route Progress</Text>
+            <View style={styles.timelineRow}>
+              {/* School */}
+              <View style={styles.timelineStep}>
+                <View style={[styles.timelineDot, styles.completedDot]} />
+                <Text style={styles.timelineLabel}>School</Text>
+              </View>
+
+              {/* Connector */}
+              <View style={styles.timelineConnector} />
+
+              {/* Home */}
+              <View style={styles.timelineStep}>
+                <View style={[styles.timelineDot, styles.pendingDot]} />
+                <Text style={styles.timelineLabel}>Home</Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Call Driver Button */}
+          <TouchableOpacity
+            style={styles.callButton}
+            onPress={handleCallDriver}
+          >
+            <Text style={styles.callButtonText}>📞 Call Driver</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
