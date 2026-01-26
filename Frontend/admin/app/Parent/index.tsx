@@ -19,7 +19,6 @@ export default function HomeScreen() {
   };
 
   const router = useRouter();
-
   const [showMap, setShowMap] = useState(false);
 
   // ✅ Static van location (no animation)
@@ -111,8 +110,28 @@ export default function HomeScreen() {
           </MapView>
         )}
 
-        {/*Actions*/}
-        <View style={styles.vanLocations}></View>
+        {/* Route Progress Timeline */}
+        <View style={styles.timelineContainer}>
+          <Text style={styles.timelineTitle}>Route Progress</Text>
+          <View style={styles.timelineRow}>
+            {/* School */}
+            <View style={styles.timelineStep}>
+              <View style={[styles.timelineDot, styles.completedDot]} />
+              <Text style={styles.timelineLabel}>School</Text>
+            </View>
+
+            {/* Connector */}
+            <View style={styles.timelineConnector} />
+
+            {/* Home */}
+            <View style={styles.timelineStep}>
+              <View style={[styles.timelineDot, styles.pendingDot]} />
+              <Text style={styles.timelineLabel}>Home</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Call Driver Button */}
         <TouchableOpacity style={styles.callButton} onPress={handleCallDriver}>
           <Text style={styles.callButtonText}>📞 Call Driver</Text>
         </TouchableOpacity>
@@ -153,26 +172,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E5D98A",
   },
-  vanHeader: {
-    marginBottom: 12,
-  },
-
   vanTitle: {
     fontSize: 18,
     fontWeight: "700",
     color: "#000",
   },
-  vanMap: {
-    width: "100%",
-    height: 160,
-    borderRadius: 12,
-    marginTop: 12,
-  },
-
   vanRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: 8,
   },
   vanLabel: { fontSize: 14, color: "#555" },
   vanTimeBadge: {
@@ -209,7 +218,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#34D399",
   },
-
   liveDot: {
     width: 8,
     height: 8,
@@ -217,27 +225,60 @@ const styles = StyleSheet.create({
     backgroundColor: "#22C55E",
     marginRight: 8,
   },
-
   liveBadgeText: {
     fontSize: 13,
     fontWeight: "600",
     color: "#065F46",
   },
-  vanLocations: {
-    marginTop: 16,
-  },
-
   callButton: {
-    marginTop: 12,
+    marginTop: 20,
     backgroundColor: "#93C5FD",
     paddingVertical: 12,
     borderRadius: 10,
     alignItems: "center",
   },
-
   callButtonText: {
     fontSize: 16,
     fontWeight: "600",
     color: "#000",
+  },
+
+  // Timeline styles
+  timelineContainer: {
+    marginTop: 20,
+  },
+  timelineTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginBottom: 12,
+  },
+  timelineRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  timelineStep: {
+    alignItems: "center",
+    flex: 1,
+  },
+  timelineDot: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    marginBottom: 4,
+  },
+  completedDot: {
+    backgroundColor: "#22C55E",
+  },
+  pendingDot: {
+    backgroundColor: "#D1D5DB",
+  },
+  timelineLabel: {
+    fontSize: 12,
+    color: "#555",
+  },
+  timelineConnector: {
+    height: 2,
+    backgroundColor: "#A3A3A3",
+    flex: 1,
   },
 });
