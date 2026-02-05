@@ -27,12 +27,16 @@ export default function ParentProfileCard() {
         activeOpacity={0.8}
         style={styles.imageWrapper}
       >
-        <Image
-          source={
-            image ? { uri: image } : require("../../assets/images/user.png")
-          }
-          style={styles.profileImage}
-        />
+        {image ? (
+          <Image
+            source={{ uri: image }}
+            style={styles.profileImage}
+          />
+        ) : (
+          <View style={[styles.profileImage, styles.placeholderImage]}>
+            <Ionicons name="person" size={40} color="#9CA3AF" />
+          </View>
+        )}
 
         <View style={styles.cameraIcon}>
           <Ionicons name="camera" size={14} color="#fff" />
@@ -77,6 +81,11 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 40,
     backgroundColor: "#E5E7EB",
+  },
+
+  placeholderImage: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   cameraIcon: {

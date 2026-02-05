@@ -1,4 +1,5 @@
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
     Image,
@@ -9,6 +10,8 @@ import {
 } from "react-native";
 
 export default function RoleSelectionScreen() {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
       {/* Back Arrow */}
@@ -28,7 +31,10 @@ export default function RoleSelectionScreen() {
       <Text style={styles.chooseText}>Choose Your Role</Text>
 
       {/* Driver Button */}
-      <TouchableOpacity style={[styles.card, styles.driverCard]}>
+      <TouchableOpacity
+        style={[styles.card, styles.driverCard]}
+        onPress={() => router.push("/Driver")}
+      >
         <View style={styles.iconCircleBlue}>
           <MaterialIcons name="directions-bus" size={26} color="#1E88E5" />
         </View>
@@ -36,7 +42,10 @@ export default function RoleSelectionScreen() {
       </TouchableOpacity>
 
       {/* Parent Button */}
-      <TouchableOpacity style={[styles.card, styles.parentCard]}>
+      <TouchableOpacity
+        style={[styles.card, styles.parentCard]}
+        onPress={() => router.push("/Parent")}
+      >
         <View style={styles.iconCircleYellow}>
           <Ionicons name="person" size={24} color="#FBC02D" />
         </View>

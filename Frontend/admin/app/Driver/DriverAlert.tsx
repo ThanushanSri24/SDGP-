@@ -7,7 +7,7 @@ import { Clock, TrafficCone, Wrench, Cloud, AlertCircle, CheckCircle,
 
 export default function AlertScreen() {
     const insets = useSafeAreaInsets();
-    const [selectedAlert, setSelectedAlert] = useState(null);
+    const [selectedAlert, setSelectedAlert] = useState<number | null>(null);
     const [customMessage, setCustomMessage] = useState("");
     const maxLength = 100;
 
@@ -50,7 +50,7 @@ export default function AlertScreen() {
         },
     ];
     // function to handle selection of quick alert options
-    const handleQuickAlert = (alert) => {
+    const handleQuickAlert = (alert: { id: number; text: string; message: string }) => {
         setSelectedAlert(alert.id);
         setCustomMessage("");
     };

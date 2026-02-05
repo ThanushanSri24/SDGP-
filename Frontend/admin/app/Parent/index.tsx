@@ -1,7 +1,7 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-  Image,
   Linking,
   ScrollView,
   StyleSheet,
@@ -106,11 +106,9 @@ export default function HomeScreen() {
               }}
             >
               <Marker coordinate={vanLocation}>
-                <Image
-                  source={require("../../assets/images/van.png")}
-                  style={{ width: 40, height: 40 }}
-                  resizeMode="contain"
-                />
+                <View style={styles.vanMarker}>
+                  <Ionicons name="bus" size={24} color="#fff" />
+                </View>
               </Marker>
             </MapView>
           )}
@@ -214,6 +212,13 @@ const styles = StyleSheet.create({
     height: 200,
     marginTop: 20,
     borderRadius: 12,
+  },
+  vanMarker: {
+    backgroundColor: "#007AFF",
+    padding: 8,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "#fff",
   },
   liveBadge: {
     flexDirection: "row",
