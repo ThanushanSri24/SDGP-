@@ -51,7 +51,6 @@ export default function YourChild() {
     null
   );
 
-  // ✅ SINGLE InfoRow component (fixed)
   const InfoRow = ({
     label,
     field,
@@ -193,7 +192,6 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
 
-  // ✅ Softer blue child card
   childCard: {
     backgroundColor: "#E8F4FD",
     padding: 16,
@@ -258,7 +256,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  // ✅ Better profile card color
   infoCard: {
     backgroundColor: "#FCF4BA",
     borderRadius: 16,
