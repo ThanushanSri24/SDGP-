@@ -3,48 +3,65 @@ import '../firebaseConfig';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-import { useEffect } from 'react';
-import messaging from '@react-native-firebase/messaging';
+import { useEffect, useRef } from 'react';
+import * as Notifications from 'expo-notifications';
 import axios from 'axios';
+import { Platform } from 'react-native';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 // Configure your backend API base URL
 // Use your computer's local IP address for testing on physical devices
-// For emulator: Android uses 10.0.2.2, iOS uses localhost
 const API_BASE_URL = 'http://10.0.2.2:3000'; // Android emulator
 // const API_BASE_URL = 'http://localhost:3000'; // iOS simulator
 // const API_BASE_URL = 'http://YOUR_LOCAL_IP:3000'; // Physical device (replace with your IP)
 
-// Request permission and get FCM token
-async function requestUserPermission() {
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+// Configure notification handler
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
-  if (enabled) {
-    console.log('Authorization status:', authStatus);
-    return true;
+// Request permission and get Expo push token
+async function registerForPushNotifications() {
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+
+  if (existingStatus !== 'granted') {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
   }
-  return false;
-}
 
-// Get FCM token and send to backend
-async function getFCMToken() {
+  if (finalStatus !== 'granted') {
+    console.log('Failed to get push token - permission not granted');
+    return null;
+  }
+
+  // Get Expo push token
+  const token = (await Notifications.getExpoPushTokenAsync()).data;
+  console.log('Expo Push Token:', token);
+
+  // Send token to your backend server
   try {
-    const token = await messaging().getToken();
-    if (token) {
-      console.log('FCM Token:', token);
-      // Send token to your backend server
-      await axios.post(`${API_BASE_URL}/api/save-token`, { token });
-      return token;
-    }
+    await axios.post(`${API_BASE_URL}/api/save-token`, { token });
   } catch (error) {
-    console.log('Error getting FCM token:', error);
+    console.log('Error saving token to backend:', error);
   }
-  return null;
+
+  // Android needs a notification channel
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  return token;
 }
 
 export const unstable_settings = {
@@ -53,39 +70,29 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const notificationListener = useRef<Notifications.EventSubscription>();
+  const responseListener = useRef<Notifications.EventSubscription>();
 
   useEffect(() => {
-    // Initialize Firebase messaging
-    const initializeFirebaseMessaging = async () => {
-      const hasPermission = await requestUserPermission();
-      if (hasPermission) {
-        await getFCMToken();
-      }
-    };
+    // Note: Push notifications don't work in Expo Go (SDK 53+)
+    // For push notifications, you need a development build
+    // Uncomment the following when using a development build:
 
-    initializeFirebaseMessaging();
-
-    // Handle foreground messages
-    const unsubscribeForeground = messaging().onMessage(async remoteMessage => {
-      console.log('Foreground message received:', remoteMessage);
-      // Handle the notification here (e.g., show an alert or update UI)
-    });
-
-    // Handle background/quit state messages
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.log('Background message received:', remoteMessage);
-    });
-
-    // Handle token refresh
-    const unsubscribeTokenRefresh = messaging().onTokenRefresh(async newToken => {
-      console.log('Token refreshed:', newToken);
-      await axios.post(`${API_BASE_URL}/api/save-token`, { token: newToken });
-    });
-
-    return () => {
-      unsubscribeForeground();
-      unsubscribeTokenRefresh();
-    };
+    // registerForPushNotifications();
+    // notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+    //   console.log('Notification received:', notification);
+    // });
+    // responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+    //   console.log('Notification response:', response);
+    // });
+    // return () => {
+    //   if (notificationListener.current) {
+    //     Notifications.removeNotificationSubscription(notificationListener.current);
+    //   }
+    //   if (responseListener.current) {
+    //     Notifications.removeNotificationSubscription(responseListener.current);
+    //   }
+    // };
   }, []);
 
   return (
