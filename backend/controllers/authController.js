@@ -3,7 +3,139 @@ const { db } = require('../config/firebase');
 const { Expo } = require('../config/expo');
 const { ROLES, COLLECTIONS } = require('../utils/constants');
 const { validateRequiredFields, isValidRole } = require('../utils/validators');
+
 const { capitalizeFirst } = require('../utils/helpers');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+/**
+ * Register a new user (Driver or Parent)
+ * POST /api/auth/register
+ */
+const register = async (req, res) => {
+    console.log('➡️ Controller: register called');
+    const { email, password, role, name, phone } = req.body;
+
+    // Validate input
+    const validation = validateRequiredFields(req.body, ['email', 'password', 'role', 'name']);
+    if (!validation.isValid) {
+        return res.status(400).json({ error: `Missing: ${validation.missingFields.join(', ')}` });
+    }
+
+    if (!isValidRole(role)) {
+        return res.status(400).json({ error: 'Invalid role. Must be "driver" or "parent".' });
+    }
+
+    try {
+        const collection = role === ROLES.DRIVER ? COLLECTIONS.DRIVERS : COLLECTIONS.PARENTS;
+
+        // Check if user already exists
+        const userSnapshot = await db.collection(collection).where('email', '==', email).get();
+        if (!userSnapshot.empty) {
+            return res.status(400).json({ error: 'Email already exists' });
+        }
+
+        // Hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Generate ID (In a real app, you might let Firestore generate it or use Firebase Auth UID)
+        // For simplicity here, we'll create a new doc ref to get an ID
+        const newDocRef = db.collection(collection).doc();
+        const userId = newDocRef.id;
+
+        const userData = {
+            userId,
+            email,
+            password: hashedPassword, // Store hashed password
+            name,
+            phone: phone || '',
+            role,
+            createdAt: new Date().toISOString(),
+            fcmToken: '',
+            expoPushToken: ''
+        };
+
+        // Create user in Firestore
+        await newDocRef.set(userData);
+
+        console.log(`User registered: ${email} (${role})`);
+
+        // Generate JWT Token
+        console.log('🔑 Generating Token...');
+        const token = jwt.sign(
+            { userId: userData.userId, role: userData.role },
+            process.env.JWT_SECRET || 'fallback_secret_key_do_not_use_in_production',
+            { expiresIn: '30d' }
+        );
+        console.log('✅ Token Generated:', token.substring(0, 15) + '...');
+
+        res.status(201).json({
+            success: true,
+            message: 'User registered successfully',
+            userId: userId,
+            token, // Return token
+            name: userData.name,
+            role: userData.role
+        });
+
+    } catch (error) {
+        console.error('Registration error:', error);
+        res.status(500).json({ error: 'Registration failed', details: error.message });
+    }
+};
+
+/**
+ * Login user
+ * POST /api/auth/login
+ */
+const login = async (req, res) => {
+    const { email, password, role } = req.body;
+
+    if (!email || !password || !role) {
+        return res.status(400).json({ error: 'Missing email, password, or role' });
+    }
+
+    try {
+        const collection = role === ROLES.DRIVER ? COLLECTIONS.DRIVERS : COLLECTIONS.PARENTS;
+
+        // Find user by email
+        const userSnapshot = await db.collection(collection).where('email', '==', email).limit(1).get();
+
+        if (userSnapshot.empty) {
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+
+        const userDoc = userSnapshot.docs[0];
+        const userData = userDoc.data();
+
+        // Check password
+        const validPassword = await bcrypt.compare(password, userData.password);
+        if (!validPassword) {
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+
+        // Generate JWT Token
+        const token = jwt.sign(
+            { userId: userData.userId, role: userData.role },
+            process.env.JWT_SECRET || 'fallback_secret_key_do_not_use_in_production',
+            { expiresIn: '30d' }
+        );
+
+        res.status(200).json({
+            success: true,
+            message: 'Login successful',
+            token,
+            userId: userData.userId,
+            name: userData.name,
+            role: userData.role
+        });
+
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ error: 'Login failed', details: error.message });
+    }
+};
 
 /**
  * Register FCM Push Token for parent or driver
@@ -100,4 +232,4 @@ const getUserInfo = async (req, res) => {
     }
 };
 
-module.exports = { registerToken, getUserInfo };
+module.exports = { registerToken, getUserInfo, login, register };

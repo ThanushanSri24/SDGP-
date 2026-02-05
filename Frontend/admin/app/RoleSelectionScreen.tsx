@@ -1,18 +1,21 @@
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import React from "react";
+import { useRouter } from "expo-router";
 import {
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function RoleSelectionScreen() {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
       {/* Back Arrow */}
-      <Ionicons name="arrow-back" size={24} style={styles.backIcon} />
+      <Ionicons name="arrow-back" size={24} style={styles.backIcon} onPress={() => router.back()} />
 
       {/* Logo */}
       <Image source={require("../assets/images/logo.png")} style={styles.logo} resizeMode="contain" />
@@ -28,7 +31,10 @@ export default function RoleSelectionScreen() {
       <Text style={styles.chooseText}>Choose Your Role</Text>
 
       {/* Driver Button */}
-      <TouchableOpacity style={[styles.card, styles.driverCard]}>
+      <TouchableOpacity
+        style={[styles.card, styles.driverCard]}
+        onPress={() => router.push('/Driver')}
+      >
         <View style={styles.iconCircleBlue}>
           <MaterialIcons name="directions-bus" size={26} color="#1E88E5" />
         </View>
@@ -36,7 +42,10 @@ export default function RoleSelectionScreen() {
       </TouchableOpacity>
 
       {/* Parent Button */}
-      <TouchableOpacity style={[styles.card, styles.parentCard]}>
+      <TouchableOpacity
+        style={[styles.card, styles.parentCard]}
+        onPress={() => router.push('/Parent')}
+      >
         <View style={styles.iconCircleYellow}>
           <Ionicons name="person" size={24} color="#FBC02D" />
         </View>
@@ -87,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     marginBottom: 20,
-    marginTop:13,
+    marginTop: 13,
   },
 
   card: {
@@ -103,12 +112,12 @@ const styles = StyleSheet.create({
 
   driverCard: {
     borderColor: "#90CAF9",
-    backgroundColor:"#e8f7ffff",
+    backgroundColor: "#e8f7ffff",
   },
 
   parentCard: {
     borderColor: "#FFF59D",
-    backgroundColor:"#fdfae5ff",
+    backgroundColor: "#fdfae5ff",
   },
 
   iconCircleBlue: {
@@ -122,7 +131,7 @@ const styles = StyleSheet.create({
   },
 
   iconCircleYellow: {
-    width:54,
+    width: 54,
     height: 54,
     borderRadius: 22,
     backgroundColor: "#f2eca9ff",
