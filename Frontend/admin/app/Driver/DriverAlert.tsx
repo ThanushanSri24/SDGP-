@@ -2,21 +2,27 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, TextInput, ScrollView, Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Clock, TrafficCone, Wrench, Cloud, AlertCircle, CheckCircle,
-} from "lucide-react-native";
+import { Clock, TrafficCone, Wrench, Cloud, AlertCircle, CheckCircle, LucideIcon } from "lucide-react-native";
 
-export default function AlertScreen() {
+interface QuickAlert {
+    id: number;
+    icon: LucideIcon;
+    text: string;
+    message: string;
+}
+
+export default function DriverAlert() {
     const insets = useSafeAreaInsets();
-    const [selectedAlert, setSelectedAlert] = useState(null);
+    const [selectedAlert, setSelectedAlert] = useState<number | null>(null);
     const [customMessage, setCustomMessage] = useState("");
     const maxLength = 100;
 
-    const quickAlerts = [
+    const quickAlerts: QuickAlert[] = [
         {
             id: 1,
             icon: Clock,
             text: "Running 10 mins late",
-            message: "Running 1 0 mins late",
+            message: "Running 10 mins late",
         },
         {
             id: 2,
@@ -49,8 +55,9 @@ export default function AlertScreen() {
             message: "All students have been dropped off",
         },
     ];
+
     // function to handle selection of quick alert options
-    const handleQuickAlert = (alert) => {
+    const handleQuickAlert = (alert: QuickAlert) => {
         setSelectedAlert(alert.id);
         setCustomMessage("");
     };
@@ -61,7 +68,7 @@ export default function AlertScreen() {
             customMessage.trim() ||
             quickAlerts.find((a) => a.id === selectedAlert)?.message;
     
-    //validation if no message
+        //validation if no message
         if(!messageToSend) {
             Alert.alert("No message", "Please select an alert or type a message.");
             return;
@@ -280,5 +287,3 @@ export default function AlertScreen() {
     );
     
 }
-
-
