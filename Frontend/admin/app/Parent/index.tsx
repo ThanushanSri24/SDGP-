@@ -1,37 +1,293 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import {
+  Image,
+  Linking,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-import React from "react";
+import MapView, { Marker } from "react-native-maps";
 
 export default function HomeScreen() {
+  // ✅ Driver phone number (static for now)
+  const driverPhoneNumber = "+94702920962";
+  const handleCallDriver = () => {
+    Linking.openURL(`tel:${driverPhoneNumber}`);
+  };
+
+  const router = useRouter();
+  const [showMap, setShowMap] = useState(false);
+
+  // ✅ Static van location (no animation)
+  const vanLocation = {
+    latitude: 6.9271,
+    longitude: 79.8612,
+  };
+
+  const now = new Date();
+  const hour = now.getHours();
+  const greeting =
+    hour >= 17
+      ? "Good Evening"
+      : hour >= 12
+      ? "Good Afternoon"
+      : "Good Morning";
+
+  const todayDate = now.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
   return (
-    <View style={style.container}>
-      <Text style={style.text}>Hello! Welcome to the Parent dashboard!</Text>
-    </View>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: 20 }}
+    >
+      <View style={styles.container}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.greeting}>{greeting}!</Text>
+            <Text style={styles.name}>Amana</Text>
+            <Text style={styles.date}>{todayDate}</Text>
+          </View>
+
+          <TouchableOpacity
+            style={styles.routeButton}
+            onPress={() => router.push("/Parent")}
+          >
+            <Text style={styles.routeButtonText}>Select the Route</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Van Card */}
+        <View style={styles.vanCard}>
+          <Text style={styles.vanTitle}>🚐 Van is on the way!</Text>
+          <View style={styles.vanRow}>
+            <Text style={styles.vanLabel}>Estimated arrival</Text>
+            <View style={styles.vanTimeBadge}>
+              <Text style={styles.vanTimeText}>—</Text>
+            </View>
+          </View>
+
+          {/* Live Tracking Button */}
+          <TouchableOpacity
+            style={styles.liveButton}
+            onPress={() => setShowMap(!showMap)}
+          >
+            <Text style={styles.liveButtonText}>
+              {showMap ? "Hide Live Tracking" : "Show Live Tracking"}
+            </Text>
+          </TouchableOpacity>
+
+          {/* Live tracking active badge*/}
+          {showMap && (
+            <View style={styles.liveBadge}>
+              <View style={styles.liveDot} />
+              <Text style={styles.liveBadgeText}>Live Tracking Active</Text>
+            </View>
+          )}
+
+          {/* Map */}
+          {showMap && (
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: vanLocation.latitude,
+                longitude: vanLocation.longitude,
+                latitudeDelta: 0.05,
+                longitudeDelta: 0.05,
+              }}
+            >
+              <Marker coordinate={vanLocation}>
+                <Image
+                  source={require("../../assets/images/van.png")}
+                  style={{ width: 40, height: 40 }}
+                  resizeMode="contain"
+                />
+              </Marker>
+            </MapView>
+          )}
+
+          {/* Route Progress Timeline */}
+          <View style={styles.timelineContainer}>
+            <Text style={styles.timelineTitle}>Route Progress</Text>
+            <View style={styles.timelineRow}>
+              {/* School */}
+              <View style={styles.timelineStep}>
+                <View style={[styles.timelineDot, styles.completedDot]} />
+                <Text style={styles.timelineLabel}>School</Text>
+              </View>
+
+              {/* Connector */}
+              <View style={styles.timelineConnector} />
+
+              {/* Home */}
+              <View style={styles.timelineStep}>
+                <View style={[styles.timelineDot, styles.pendingDot]} />
+                <Text style={styles.timelineLabel}>Home</Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Call Driver Button */}
+          <TouchableOpacity
+            style={styles.callButton}
+            onPress={handleCallDriver}
+          >
+            <Text style={styles.callButtonText}>📞 Call Driver</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#Fbf1b1",
     flex: 1,
-    justifyContent: "center",
+    paddingTop: 50,
+    paddingHorizontal: 20,
+    backgroundColor: "#fff",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
   },
-  text: {
-    color: "black",
+  greeting: { fontSize: 18, color: "#555" },
+  name: { fontSize: 28, fontWeight: "bold", color: "#000" },
+  date: { fontSize: 14, color: "#666" },
+  routeButton: {
+    backgroundColor: "#fff3a0",
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#000",
+  },
+  routeButtonText: { fontWeight: "600", color: "#000", fontSize: 14 },
+  vanCard: {
+    backgroundColor: "#FFF8CC",
+    marginTop: 30,
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#E5D98A",
+  },
+  vanTitle: {
     fontSize: 18,
-    marginBottom: 20,
+    fontWeight: "700",
+    color: "#000",
   },
-  button: {
-    fontSize: 20,
-    textDecorationLine: "underline",
-    color: "black",
-    marginBottom: 15,
+  vanRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 8,
   },
-  testButton: {
-    fontSize: 16,
-    textDecorationLine: "underline",
-    color: "#ffeb3b",
+  vanLabel: { fontSize: 14, color: "#555" },
+  vanTimeBadge: {
+    backgroundColor: "#DCFCE7",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+  },
+  vanTimeText: { color: "#166534", fontWeight: "600", fontSize: 13 },
+  liveButton: {
+    backgroundColor: "#007AFF",
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 6,
+    alignItems: "center",
+    marginTop: 20,
+  },
+  liveButtonText: { color: "#fff", fontWeight: "600" },
+  map: {
+    width: "100%",
+    height: 200,
+    marginTop: 20,
+    borderRadius: 12,
+  },
+  liveBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "center",
     marginTop: 10,
+    backgroundColor: "#ECFDF5",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#34D399",
+  },
+  liveDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#22C55E",
+    marginRight: 8,
+  },
+  liveBadgeText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#065F46",
+  },
+  callButton: {
+    marginTop: 20,
+    backgroundColor: "#93C5FD",
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  callButtonText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#000",
+  },
+
+  // Timeline styles
+  timelineContainer: {
+    marginTop: 20,
+  },
+  timelineTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginBottom: 12,
+  },
+  timelineRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  timelineStep: {
+    alignItems: "center",
+    flex: 1,
+  },
+  timelineDot: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    marginBottom: 4,
+  },
+  completedDot: {
+    backgroundColor: "#22C55E",
+  },
+  pendingDot: {
+    backgroundColor: "#D1D5DB",
+  },
+  timelineLabel: {
+    fontSize: 12,
+    color: "#555",
+  },
+  timelineConnector: {
+    height: 2,
+    backgroundColor: "#A3A3A3",
+    flex: 1,
   },
 });
