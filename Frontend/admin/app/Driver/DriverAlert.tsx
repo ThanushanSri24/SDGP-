@@ -13,7 +13,7 @@ interface QuickAlert {
     message: string;
 }
 
-// Configure how notifications should be handled when app is in foreground
+// Configure how notifications should be handled when app is in the foreground
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
