@@ -1,16 +1,15 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { ScrollView } from "react-native";
-import { Linking } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { Linking, ScrollView } from "react-native";
 
 import {
-  TextInput,
+  Alert,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
-  Alert,
 } from "react-native";
 
 type ChildInfoType = {
@@ -27,7 +26,7 @@ export default function YourChild() {
   const navigation = useNavigation();
 
   const [attendance, setAttendance] = useState<"ABSENT" | "PRESENT" | null>(
-    null
+    null,
   );
 
   const confirmAttendance = (type: "ABSENT" | "PRESENT") => {
@@ -48,10 +47,44 @@ export default function YourChild() {
   });
 
   const [editingField, setEditingField] = useState<keyof ChildInfoType | null>(
-    null
+    null,
+  );
+  // ⭐ DRIVER RATING STATE
+  const [driverRating, setDriverRating] = useState(0);
+  const [lastRatedDate, setLastRatedDate] = useState<Date | null>(null);
+  const [canRateDriver, setCanRateDriver] = useState(true);
+
+  const checkDriverRatingEligibility = () => {
+    if (!lastRatedDate) {
+      setCanRateDriver(true);
+      return;
+    }
+    const now = new Date();
+    const diffDays =
+      (now.getTime() - lastRatedDate.getTime()) / (1000 * 60 * 60 * 24);
+    setCanRateDriver(diffDays >= 90);
+  };
+
+  const submitDriverRating = useCallback((value: number) => {
+    if (!canRateDriver) return;
+    setDriverRating(value);
+    setLastRatedDate(new Date());
+    setCanRateDriver(false);
+    Alert.alert("Thank you", `You rated the driver ${value} stars`);
+    // TODO: save to database here
+  }, [canRateDriver]);
+
+  const handleStarPress = useCallback(
+    (star: number) => {
+      submitDriverRating(star);
+    },
+    [submitDriverRating],
   );
 
-  // ✅ SINGLE InfoRow component (fixed)
+  useEffect(() => {
+    checkDriverRatingEligibility();
+  }, [lastRatedDate]);
+
   const InfoRow = ({
     label,
     field,
@@ -163,6 +196,36 @@ export default function YourChild() {
         <Text style={styles.driverInfo}>Vehicle: Van</Text>
         {/* replace with real data */}
         <Text style={styles.driverInfo}>Number: WP R-1234</Text>
+        {/* ⭐ DRIVER RATING */}
+        <View style={{ marginTop: 12 }}>
+          <Text style={{ fontSize: 16, fontWeight: "600", marginBottom: 6 }}>
+            Driver Rating
+          </Text>
+
+          <View style={{ flexDirection: "row" }}>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <TouchableOpacity
+                key={star}
+                disabled={!canRateDriver}
+                onPress={() => handleStarPress(star)}
+              >
+                <Ionicons
+                  name={star <= driverRating ? "star" : "star-outline"}
+                  size={28}
+                  color={star <= driverRating ? "#FFD700" : "#C7C7C7"}
+                  style={{ marginRight: 6 }}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          {!canRateDriver && (
+            <Text style={{ fontSize: 12, color: "#666", marginTop: 4 }}>
+              You can rate this driver again after 3 months
+            </Text>
+          )}
+        </View>
+
         {/* replace with real data */}
         <TouchableOpacity
           style={styles.callButton}
@@ -193,7 +256,6 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
 
-  // ✅ Softer blue child card
   childCard: {
     backgroundColor: "#E8F4FD",
     padding: 16,
@@ -258,7 +320,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  // ✅ Better profile card color
   infoCard: {
     backgroundColor: "#FCF4BA",
     borderRadius: 16,
