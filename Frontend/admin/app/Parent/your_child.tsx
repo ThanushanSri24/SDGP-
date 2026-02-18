@@ -182,7 +182,7 @@ export default function YourChild() {
 
         <InfoRow label="Student Name" field="studentName" />
         <InfoRow label="School" field="school" />
-        <InfoRow label="Route Number" field="routeNumber" editable={false} />
+        <InfoRow label="Assign route Number" field="routeNumber" editable={false} />
         <InfoRow label="Assigned Driver" field="driver" editable={false} />
         <InfoRow label="Pickup Location" field="pickup" />
         <InfoRow label="Drop-off Location" field="dropoff" />
