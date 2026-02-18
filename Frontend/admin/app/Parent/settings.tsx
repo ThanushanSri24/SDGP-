@@ -14,18 +14,16 @@ export default function SettingsScreen() {
 
   return (
     <View style={styles.screen}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#111827" />
-        </TouchableOpacity>
-
-        <View style={{ width: 24 }} />
-      </View>
-
       <ScrollView>
+        {/* Header */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <Ionicons name="arrow-back" size={24} color="#111827" />
+          </TouchableOpacity>
+        </View>
+
         {/* Account Section */}
-        <Text style={styles.sectionTitle}>Account</Text>
+        <Text style={styles.sectionTitle}>Account Settings</Text>
 
         <SettingItem
           icon="person-outline"
@@ -38,19 +36,25 @@ export default function SettingsScreen() {
           label="Change Password"
           onPress={() => {}} //need to link with the change password
         />
-
-        {/* Support Section */}
-        <Text style={styles.sectionTitle}>Support</Text>
-
         <SettingItem
-          icon="help-circle-outline"
-          label="Help & Support"
+          icon="card-outline"
+          label="Payment & Bank Details"
           onPress={() => {}}
         />
 
+        <Text style={styles.sectionTitle}>App Preferences</Text>
+
         <SettingItem
-          icon="information-circle-outline"
-          label="About"
+          icon="notifications-outline"
+          label="Notification Preferences"
+          onPress={() => {}}
+          showBadge={true}
+          badgeCount="1"
+        />
+
+        <SettingItem
+          icon="map-outline"
+          label="Route & Map Settings"
           onPress={() => {}}
         />
 
@@ -139,10 +143,14 @@ function SettingItem({
   icon,
   label,
   onPress,
+  showBadge = false,
+  badgeCount,
 }: {
   icon: any;
   label: string;
   onPress: () => void;
+  showBadge?: boolean;
+  badgeCount?: string;
 }) {
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
