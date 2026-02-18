@@ -1,4 +1,5 @@
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   Image,
@@ -12,21 +13,20 @@ import {
 
 export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.safe}>
-      {/* BACK BUTTON */}
-      <TouchableOpacity style={styles.backButton}>
-        <Text style={styles.backText}>‹</Text>
+     
+      <TouchableOpacity onPress={() => router.back()}>
+        <Ionicons name="arrow-back" size={24} color="#111827" />
       </TouchableOpacity>
 
       <View style={styles.container}>
-        {/* TITLE */}
         <Text style={styles.title}>
           Welcome back! Glad{"\n"}to see you, Again!
         </Text>
 
-        {/* EMAIL */}
         <TextInput
           placeholder="Enter your email"
           placeholderTextColor="#9CA3AF"
@@ -34,7 +34,6 @@ export default function LoginScreen() {
           keyboardType="email-address"
         />
 
-        {/* PASSWORD */}
         <View style={styles.passwordContainer}>
           <TextInput
             placeholder="Enter your password"
@@ -54,24 +53,20 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-         {/* FORGOT PASSWORD */}
         <TouchableOpacity>
           <Text style={styles.forgotText}>Forgot Password?</Text>
         </TouchableOpacity>
 
-        {/* LOGIN BUTTON */}
         <TouchableOpacity style={styles.loginButton}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
 
-        {/* OR LOGIN WITH */}
         <View style={styles.orRow}>
           <View style={styles.line} />
           <Text style={styles.orText}>Or login with</Text>
           <View style={styles.line} />
         </View>
 
-         {/* SOCIAL BUTTONS */}
         <View style={styles.socialRow}>
           <TouchableOpacity style={styles.socialButton}>
             <FontAwesome name="facebook" size={22} color="#1877F2" />
@@ -90,8 +85,6 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-
-        {/* REGISTER */}
         <View style={styles.registerRow}>
           <Text style={styles.registerText}>
             Don’t have an account?{" "}
@@ -144,7 +137,7 @@ const styles = StyleSheet.create({
   input: {
     height: 52,
     borderWidth: 1,
-    borderColor: "#50bcffff",
+    borderColor: "#5AA9E6",
     borderRadius: 12,
     paddingHorizontal:14,
     fontSize: 15,
@@ -155,7 +148,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#50bcffff",
+    borderColor: "#5AA9E6",
     borderRadius: 12,
     paddingHorizontal: 14,
     height: 52,
@@ -179,7 +172,7 @@ const styles = StyleSheet.create({
   loginButton: {
     height: 54,
     borderRadius: 14,
-    backgroundColor: "#50bcffff",
+    backgroundColor: "#5AA9E6",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 35,
@@ -214,6 +207,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 24,
   },
+
   socialButton: {
     flex: 1,
     height: 52,
@@ -224,14 +218,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 6,
   },
+
   socialText: {
     fontSize: 18,
     fontWeight: "700",
   },
+
   registerRow: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 200,
   },
 
   registerText: {
@@ -239,7 +234,7 @@ const styles = StyleSheet.create({
   },
 
   registerNow: {
-    color: "#50bcffff",
+    color: "#5AA9E6",
     fontWeight: "700",
   },
 
