@@ -1,9 +1,11 @@
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -29,6 +31,16 @@ export default function LoginScreen() {
             secureTextEntry={!showPassword}
             style={styles.passwordInput}
           />
+
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            <Ionicons
+              name={showPassword ? "eye-off" : "eye"}
+              size={22}
+              color="#6B7280"
+            /> 
+          </TouchableOpacity>
         </View>  
       </View>
     </SafeAreaView>
