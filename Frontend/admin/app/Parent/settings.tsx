@@ -58,6 +58,18 @@ export default function SettingsScreen() {
           onPress={() => {}}
         />
 
+        <Text style={styles.sectionTitle}>Support & Legal</Text>
+        <SettingItem
+          icon="help-circle-outline"
+          label="Help & Support"
+          onPress={() => {}}
+        />
+        <SettingItem
+          icon="shield-checkmark-outline"
+          label="Privacy Policy"
+          onPress={() => {}}
+        />
+
         {/* Logout */}
         <TouchableOpacity style={styles.logoutButton}>
           <Ionicons name="log-out-outline" size={20} color="#DC2626" />
