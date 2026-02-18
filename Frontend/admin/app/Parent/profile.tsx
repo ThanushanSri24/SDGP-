@@ -18,6 +18,7 @@ export default function ParentProfileCard() {
   const [name, setName] = useState("Jane Doe");
   const [email, setEmail] = useState("jane.doe@email.com");
   const [phone, setPhone] = useState("+1 234 567 890");
+  const [vanNumber, setVanNumber] = useState("");
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -101,12 +102,11 @@ export default function ParentProfileCard() {
       {/* Registered Van Number */}
       <Text style={styles.labelInput4}>Registered Van number</Text>
       <View style={styles.inputBox4}>
-        <Ionicons name="call-outline" size={18} color="#6B7280" />
+        <Ionicons name="car-outline" size={18} color="#6B7280" />
         <TextInput
           style={styles.input}
-          value={phone}
-          onChangeText={setPhone}
-          keyboardType="phone-pad"
+          value={vanNumber}
+          onChangeText={setVanNumber}
         />
       </View>
     </ScrollView>
