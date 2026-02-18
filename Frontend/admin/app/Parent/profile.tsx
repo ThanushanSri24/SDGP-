@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -32,7 +33,7 @@ export default function ParentProfileCard() {
   };
 
   return (
-    <View style={styles.screen}>
+    <ScrollView style={styles.screen}>
       <TouchableOpacity
         style={styles.settingsButton}
         onPress={() => router.push("/Parent/settings")}
@@ -67,16 +68,16 @@ export default function ParentProfileCard() {
 
       <View style={styles.detailsContainer}>
         {/*Parent Name*/}
-        <Text style={styles.labelInput}>Parent Name</Text>
-        <View style={styles.inputBox}>
+        <Text style={styles.labelInput1}>Parent Name</Text>
+        <View style={styles.inputBox1}>
           <Ionicons name="person-outline" size={18} color="#6B7280" />
           <TextInput style={styles.input} value={name} onChangeText={setName} />
         </View>
       </View>
 
       {/* Email */}
-      <Text style={styles.labelInput}>Email</Text>
-      <View style={styles.inputBox}>
+      <Text style={styles.labelInput2}>Email</Text>
+      <View style={styles.inputBox2}>
         <Ionicons name="mail-outline" size={18} color="#6B7280" />
         <TextInput
           style={styles.input}
@@ -85,7 +86,30 @@ export default function ParentProfileCard() {
           keyboardType="email-address"
         />
       </View>
-    </View>
+      {/* Phone */}
+      <Text style={styles.labelInput3}>Phone</Text>
+      <View style={styles.inputBox3}>
+        <Ionicons name="call-outline" size={18} color="#6B7280" />
+        <TextInput
+          style={styles.input}
+          value={phone}
+          onChangeText={setPhone}
+          keyboardType="phone-pad"
+        />
+      </View>
+
+      {/* Registered Van Number */}
+      <Text style={styles.labelInput4}>Registered Van number</Text>
+      <View style={styles.inputBox4}>
+        <Ionicons name="call-outline" size={18} color="#6B7280" />
+        <TextInput
+          style={styles.input}
+          value={phone}
+          onChangeText={setPhone}
+          keyboardType="phone-pad"
+        />
+      </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
@@ -159,21 +183,80 @@ const styles = StyleSheet.create({
     marginTop: 30,
     paddingHorizontal: 16,
   },
-  labelInput: {
+  labelInput1: {
     fontSize: 14,
     fontWeight: "600",
     marginBottom: 6,
     color: "#374151",
+    marginLeft: 4,
   },
 
-  inputBox: {
+  inputBox1: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#F3F4F6",
     borderRadius: 10,
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
     height: 50,
     marginBottom: 20,
+    marginLeft: 1,
+  },
+  labelInput2: {
+    fontSize: 14,
+    fontWeight: "600",
+    marginBottom: 6,
+    color: "#374151",
+    marginLeft: 20,
+  },
+
+  inputBox2: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F3F4F6",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    height: 50,
+    marginBottom: 20,
+    marginLeft: 16,
+    marginRight: 15,
+  },
+  labelInput3: {
+    fontSize: 14,
+    fontWeight: "600",
+    marginBottom: 6,
+    color: "#374151",
+    marginLeft: 20,
+  },
+
+  inputBox3: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F3F4F6",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    height: 50,
+    marginBottom: 20,
+    marginLeft: 15,
+    marginRight: 15,
+  },
+  labelInput4: {
+    fontSize: 14,
+    fontWeight: "600",
+    marginBottom: 6,
+    color: "#374151",
+    marginLeft: 20,
+  },
+
+  inputBox4: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F3F4F6",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    height: 50,
+    marginBottom: 20,
+    marginLeft: 15,
+    marginRight: 15,
   },
   input: {
     flex: 1,
