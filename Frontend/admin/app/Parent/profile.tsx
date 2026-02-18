@@ -2,7 +2,14 @@ import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function ParentProfileCard() {
   const router = useRouter();
@@ -65,6 +72,18 @@ export default function ParentProfileCard() {
           <Ionicons name="person-outline" size={18} color="#6B7280" />
           <TextInput style={styles.input} value={name} onChangeText={setName} />
         </View>
+      </View>
+
+      {/* Email */}
+      <Text style={styles.labelInput}>Email</Text>
+      <View style={styles.inputBox}>
+        <Ionicons name="mail-outline" size={18} color="#6B7280" />
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
       </View>
     </View>
   );
