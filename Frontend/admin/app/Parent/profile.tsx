@@ -22,6 +22,8 @@ export default function ParentProfileCard() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -34,6 +36,34 @@ export default function ParentProfileCard() {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
+  };
+
+  const handlePasswordChange = () => {
+    setError("");
+    setSuccess("");
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      setError("All fields are required.");
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setError("New password must be at least 6 characters.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    // If everything is valid
+    setSuccess("Password updated successfully!");
+
+    // Clear fields
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
   };
 
   return (
@@ -157,7 +187,13 @@ export default function ParentProfileCard() {
         </View>
 
         {/* Confirm Button */}
-        <TouchableOpacity style={styles.confirmButton}>
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        {success ? <Text style={styles.successText}>{success}</Text> : null}
+
+        <TouchableOpacity
+          style={styles.confirmButton}
+          onPress={handlePasswordChange}
+        >
           <Text style={styles.confirmText}>Confirm</Text>
         </TouchableOpacity>
       </View>
@@ -359,5 +395,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#111827",
+  },
+  errorText: {
+    color: "#DC2626",
+    marginBottom: 10,
+    fontSize: 14,
+  },
+
+  successText: {
+    color: "#16A34A",
+    marginBottom: 10,
+    fontSize: 14,
   },
 });
