@@ -4,27 +4,41 @@ import {
   Text,
   StyleSheet,
   View,
-  TouchableOpacity,
+  TextInput,
 } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function DriverRegister() {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Driver Portal</Text>
-        <Text style={styles.subtitle}>
-          Manage Your Van Route & Students
-        </Text>
-      </View>
-
       <View style={styles.form}>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Register</Text>
-        </TouchableOpacity>
+        {input("account", "Driver Name", "Enter your full name")}
+        {input("email-outline", "Email", "Enter your email")}
+        {input("phone-outline", "Phone Number", "Enter phone number")}
       </View>
     </SafeAreaView>
   );
 }
+
+const input = (
+  iconName: any,
+  label: string,
+  placeholder: string
+) => (
+  <View style={styles.field}>
+    <Text style={styles.label}>{label}</Text>
+
+    <View style={styles.inputWrapper}>
+      <MaterialCommunityIcons name={iconName} size={20} color="#777" />
+
+      <TextInput
+        placeholder={placeholder}
+        placeholderTextColor="#999"
+        style={styles.input}
+      />
+    </View>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -33,42 +47,34 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  header: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
-
-  title: {
-    fontSize: 22,
-    fontWeight: "700",
-    color: "#222",
-  },
-
-  subtitle: {
-    fontSize: 13,
-    color: "#666",
-    marginTop: 5,
-  },
-
   form: {
     backgroundColor: "#fff",
     borderRadius: 18,
     padding: 18,
-    elevation: 10,
   },
 
-  button: {
-    backgroundColor: "#5AA9E6",
-    height: 48,
-    borderRadius: 14,
-    justifyContent: "center",
+  field: {
+    marginBottom: 14,
+  },
+
+  label: {
+    fontSize: 13,
+    fontWeight: "600",
+    marginBottom: 6,
+  },
+
+  inputWrapper: {
+    flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
+    borderWidth: 1,
+    borderColor: "#71d6f3ff",
+    borderRadius: 12,
+    paddingHorizontal: 12,
   },
 
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
+  input: {
+    flex: 1,
+    height: 46,
+    marginLeft: 8,
   },
 });
