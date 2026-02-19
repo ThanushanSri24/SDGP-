@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 8,
+    marginTop: 20,
   },
   vanLabel: { fontSize: 14, color: "#555" },
   vanTimeBadge: {
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   liveButtonText: { color: "#fff", fontWeight: "600" },
   map: {
     width: "100%",
-    height: 200,
+    height: 400,
     marginTop: 20,
     borderRadius: 12,
   },
