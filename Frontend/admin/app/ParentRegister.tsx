@@ -51,6 +51,35 @@ export default function ParentRegisterScreen() {
   );
 }
 
+const input = (
+  iconName: IconName,
+  label: string,
+  placeholder: string,
+  secure: boolean = false,
+  scrollRef?: React.RefObject<ScrollView | null>,
+  scrollY: number = 0
+) => (
+
+  <View style={styles.field}>
+    <Text style={styles.label}>{label}</Text>
+    <View style={styles.inputWrapper}>
+      <MaterialCommunityIcons name={iconName} size={20} color="#777" />
+      <TextInput
+        placeholder={placeholder}
+        placeholderTextColor="#999"
+        secureTextEntry={secure}
+        style={styles.input}
+        onFocus={() => {
+          scrollRef?.current?.scrollTo({
+            y: scrollY,
+            animated: true,
+          });
+        }}
+      />
+    </View>
+  </View>
+);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -90,6 +119,35 @@ const styles = StyleSheet.create({
 
   formWrapper: {
     flex: 1,
+  },
+
+  field: {
+    marginBottom: 14,
+  },
+
+  label: {
+    fontSize: 13,
+    fontWeight: "600",
+    marginBottom: 6,
+    color: "#333",
+  },
+
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#71d6f3ff",
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    backgroundColor: "#FAFAFA",
+  },
+  
+  input: {
+    flex: 1,
+    height: 46,
+    marginLeft: 8,
+    fontSize: 14,
+    color: "#000",
   },
 
 });
