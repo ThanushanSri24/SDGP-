@@ -92,6 +92,13 @@ export default function ParentRegisterScreen() {
               </TouchableOpacity>
             </View>
 
+            <View style={styles.LoginRow}>
+                <Text style={styles.LoginText}>Already have an account? </Text>
+                <TouchableOpacity onPress={() => console.log("Go to Login")}>
+                <Text style={styles.LoginNow}>Login Now</Text>
+                </TouchableOpacity>
+            </View>
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -168,7 +175,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-   form: {
+  form: {
     backgroundColor: "#fff",
     borderRadius: 18,
     padding: 18,
@@ -203,7 +210,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#000",
   },
-
   button: {
     backgroundColor: "#5AA9E6",
     height: 48,
@@ -218,5 +224,18 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
+  LoginRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop:10,
+  },
 
+  LoginText: {
+    color: "#6B7280",
+  },
+
+  LoginNow: {
+    color: "#5AA9E6",
+    fontWeight: "700",
+  },
 });
