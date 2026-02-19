@@ -1,5 +1,6 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
 import {
   SafeAreaView,
   View,
@@ -23,6 +24,10 @@ export default function PasswordUpdatedScreen() {
         <Text style={styles.subtitle}>
           Your password has been updated!
         </Text>
+
+    <TouchableOpacity style={styles.button}>
+      <Text style={styles.buttonText}>LOGIN</Text>
+    </TouchableOpacity>
 
       </View>
     </SafeAreaView>
@@ -63,5 +68,19 @@ const styles = StyleSheet.create({
   alignItems: "center",
   marginBottom: 30,
 },
+
+button: {
+  backgroundColor: "#50bcff",
+  paddingVertical: 12,
+  paddingHorizontal: 60,
+  borderRadius: 8,
+},
+
+buttonText: {
+  color: "#201a1a",
+  fontWeight: "700",
+  fontSize: 17,
+},
+
 
 });
