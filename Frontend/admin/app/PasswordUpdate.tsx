@@ -1,4 +1,5 @@
 import React from "react";
+import { Ionicons } from "@expo/vector-icons";
 import {
   SafeAreaView,
   View,
@@ -14,6 +15,10 @@ export default function PasswordUpdatedScreen() {
         <Text style={styles.title}>
           PASSWORD{"\n"}UPDATED
         </Text>
+
+      <View style={styles.circle}>
+        <Ionicons name="checkmark" size={40} color="#fff" />
+      </View>
 
         <Text style={styles.subtitle}>
           Your password has been updated!
@@ -48,4 +53,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#555",
   },
+
+  circle: {
+  width: 90,
+  height: 90,
+  borderRadius: 45,
+  backgroundColor: "#50bcff",
+  justifyContent: "center",
+  alignItems: "center",
+  marginBottom: 30,
+},
+
 });
