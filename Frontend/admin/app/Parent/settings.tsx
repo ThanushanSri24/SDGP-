@@ -34,11 +34,6 @@ export default function SettingsScreen() {
         />
 
         <SettingItem
-          icon="lock-closed-outline"
-          label="Change Password"
-          onPress={() => {}} //need to link with the change password
-        />
-        <SettingItem
           icon="card-outline"
           label="Payment & Bank Details"
           onPress={() => {}}
