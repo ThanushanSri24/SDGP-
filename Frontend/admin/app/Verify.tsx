@@ -1,7 +1,9 @@
-import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, TextInput, Image, StyleSheet } from "react-native";
 
 export default function VerifyScreen() {
+  const [code, setCode] = useState("");
+
   return (
     <View style={styles.container}>
       <Image
@@ -9,6 +11,17 @@ export default function VerifyScreen() {
         style={styles.image}
       />
       <Text style={styles.title}>Verify Your Email to Begin</Text>
+
+      <TextInput
+        style={styles.input}
+        keyboardType="number-pad"
+        maxLength={4}
+        value={code}
+        onChangeText={setCode}
+        placeholder="Enter 4-digit code"
+        placeholderTextColor="#9CA3AF"
+        textAlign="center"
+      />
     </View>
   );
 }
@@ -32,5 +45,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 4,
+  },
+  input: {
+    width: "60%",
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#50bcffff",
+    borderRadius: 10,
+    fontSize: 19,
+    marginBottom: 30,
+    marginTop: 15,
   },
 });
