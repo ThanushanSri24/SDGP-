@@ -1,8 +1,39 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Alert,
+} from "react-native";
 
 export default function VerifyScreen() {
   const [code, setCode] = useState("");
+
+  // TEMP: frontend check (replace with backend later)
+  const CORRECT_CODE = "1234";
+
+  const handleContinue = () => {
+    if (code.length !== 4) {
+      Alert.alert("Invalid Code", "Please enter a 4-digit code.");
+      return;
+    }
+
+    if (code !== CORRECT_CODE) {
+      Alert.alert("Verification Failed", "The code you entered is incorrect.");
+      return;
+    }
+
+    Alert.alert("Success", "Email verified successfully!");
+    // navigation.navigate("NextScreen");
+  };
+
+  const handleResend = () => {
+    Alert.alert("Code Sent", "A new verification code has been sent.");
+    // backend resend API later
+  };
 
   return (
     <View style={styles.container}>
@@ -10,6 +41,7 @@ export default function VerifyScreen() {
         source={require("../assets/images/verify.png")}
         style={styles.image}
       />
+
       <Text style={styles.title}>Verify Your Email to Begin</Text>
 
       <TextInput
@@ -22,6 +54,17 @@ export default function VerifyScreen() {
         placeholderTextColor="#9CA3AF"
         textAlign="center"
       />
+
+      <TouchableOpacity style={styles.button} onPress={handleContinue}>
+        <Text style={styles.buttonText}>Continue</Text>
+      </TouchableOpacity>
+
+      <View style={styles.codeRow}>
+        <Text style={styles.codeText}>Didn't Get the Code? </Text>
+        <TouchableOpacity onPress={handleResend}>
+          <Text style={styles.resendCode}>Resend Code</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -55,5 +98,29 @@ const styles = StyleSheet.create({
     fontSize: 19,
     marginBottom: 30,
     marginTop: 15,
+  },
+  button: {
+    backgroundColor: "#50bcffff",
+    width: "100%",
+    paddingVertical: 14,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: "#1b0202",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  codeRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  codeText: {
+    color: "#6B7280",
+  },
+  resendCode: {
+    color: "#50bcffff",
+    fontWeight: "700",
   },
 });
