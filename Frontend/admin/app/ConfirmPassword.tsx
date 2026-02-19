@@ -37,25 +37,19 @@ export default function LoginScreen() {
             keyboardShouldPersistTaps="handled"
           >
     
-
-            {/* Logo */}
             <Image
               source={require("../assets/images/Newpassword.png")}
               style={styles.logo}
               resizeMode="contain"
             />
 
-            {/* Title */}
             <Text style={styles.title}>Recover Password</Text>
             <Text style={styles.subtitle}>
               Your Identity has been verified{"\n"}
               Set your new password
             </Text>
 
-            {/* FORM */}
             <View style={styles.form}>
-              
-              {/* New Password */}
 
               <View style={styles.passwordContainer}>
                 <TextInput
@@ -85,7 +79,6 @@ export default function LoginScreen() {
 
               </TouchableOpacity>
 
-              {/* Confirm Password */}
               <View style={styles.passwordContainer}>
                 <TextInput
                     placeholder="Confirm Password"
@@ -114,7 +107,6 @@ export default function LoginScreen() {
  
               </TouchableOpacity>
 
-              {/* Login Button */}
               <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonText}>Update</Text>
               </TouchableOpacity>
