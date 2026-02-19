@@ -1,33 +1,35 @@
 import React from "react";
-import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
 import {
   SafeAreaView,
   View,
   Text,
+  TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function PasswordUpdatedScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         
-        <Text style={styles.title}>
-          PASSWORD{"\n"}UPDATED
-        </Text>
+        {/* Title */}
+        <Text style={styles.title}>PASSWORD{"\n"}UPDATED</Text>
 
-      <View style={styles.circle}>
-        <Ionicons name="checkmark" size={40} color="#fff" />
-      </View>
+        {/* Blue Tick Circle */}
+        <View style={styles.circle}>
+          <Ionicons name="checkmark" size={40} color="#fff" />
+        </View>
 
+        {/* Subtitle */}
         <Text style={styles.subtitle}>
           Your password has been updated!
         </Text>
 
-    <TouchableOpacity style={styles.button}>
-      <Text style={styles.buttonText}>LOGIN</Text>
-    </TouchableOpacity>
+        {/* Login Button */}
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>LOGIN</Text>
+        </TouchableOpacity>
 
       </View>
     </SafeAreaView>
@@ -39,8 +41,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f2f2f2",
     alignItems: "center",
-    paddingTop: 160,
-  },
+    paddingTop: 160, 
+ },
 
   content: {
     alignItems: "center",
@@ -50,37 +52,36 @@ const styles = StyleSheet.create({
     fontSize: 27,
     fontWeight: "700",
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 40,
     color: "#000",
+  },
+
+  circle: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    backgroundColor: "#50bcff", 
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 30,
   },
 
   subtitle: {
     fontSize: 15,
     color: "#555",
+    marginBottom: 25,
   },
 
-  circle: {
-  width: 90,
-  height: 90,
-  borderRadius: 45,
-  backgroundColor: "#50bcff",
-  justifyContent: "center",
-  alignItems: "center",
-  marginBottom: 30,
-},
+  button: {
+    backgroundColor: "#50bcff", 
+    paddingVertical: 12,
+    paddingHorizontal: 60,
+    borderRadius: 8,
+  },
 
-button: {
-  backgroundColor: "#50bcff",
-  paddingVertical: 12,
-  paddingHorizontal: 60,
-  borderRadius: 8,
-},
-
-buttonText: {
-  color: "#201a1a",
-  fontWeight: "700",
-  fontSize: 17,
-},
-
-
+  buttonText: {
+    color: "#201a1a",
+    fontWeight: "700",
+    fontSize: 17,
+  },
 });
