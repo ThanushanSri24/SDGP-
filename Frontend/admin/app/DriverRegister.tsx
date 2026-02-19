@@ -1,5 +1,11 @@
 import React from "react";
-import { SafeAreaView, Text, StyleSheet, View } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from "react-native";
 
 export default function DriverRegister() {
   return (
@@ -10,6 +16,12 @@ export default function DriverRegister() {
           Manage Your Van Route & Students
         </Text>
       </View>
+
+      <View style={styles.form}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -18,12 +30,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#e8f8ffff",
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 20,
   },
 
   header: {
     alignItems: "center",
+    marginBottom: 20,
   },
 
   title: {
@@ -36,5 +48,27 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#666",
     marginTop: 5,
+  },
+
+  form: {
+    backgroundColor: "#fff",
+    borderRadius: 18,
+    padding: 18,
+    elevation: 10,
+  },
+
+  button: {
+    backgroundColor: "#5AA9E6",
+    height: 48,
+    borderRadius: 14,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+  },
+
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
   },
 });
