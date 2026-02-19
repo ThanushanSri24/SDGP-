@@ -4,6 +4,8 @@ import { useState } from "react";
 import { TextInput } from "react-native";
 const [newPassword, setNewPassword] = useState("");
 const [confirmPassword, setConfirmPassword] = useState("");
+import { Ionicons } from "@expo/vector-icons";
+
 
 
 import {
@@ -11,9 +13,15 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 
 export default function ConfirmPassword() {
+
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -50,7 +58,54 @@ export default function ConfirmPassword() {
     onChangeText={setConfirmPassword}
   />
 
+  <View style={styles.passwordContainer}>
+  <TextInput
+    placeholder="New Password"
+    placeholderTextColor="#9CA3AF"
+    secureTextEntry={!showNewPassword}
+    style={styles.passwordInput}
+    value={newPassword}
+    onChangeText={setNewPassword}
+  />
+
+  <TouchableOpacity
+    onPress={() => setShowNewPassword(!showNewPassword)}
+  >
+    <Ionicons
+      name={showNewPassword ? "eye" : "eye-off"}
+      size={22}
+      color="#6B7280"
+    />
+  </TouchableOpacity>
 </View>
+
+<View style={styles.passwordContainer}>
+  <TextInput
+    placeholder="Confirm Password"
+    placeholderTextColor="#9CA3AF"
+    secureTextEntry={!showConfirmPassword}
+    style={styles.passwordInput}
+    value={confirmPassword}
+    onChangeText={setConfirmPassword}
+  />
+
+  <TouchableOpacity
+    onPress={() =>
+      setShowConfirmPassword(!showConfirmPassword)
+    }
+  >
+    <Ionicons
+      name={showConfirmPassword ? "eye" : "eye-off"}
+      size={22}
+      color="#6B7280"
+    />
+  </TouchableOpacity>
+</View>
+
+
+</View>
+
+
 
       </View>
     </SafeAreaView>
@@ -100,6 +155,23 @@ input: {
   fontSize: 15,
   marginBottom: 18,
 },
+
+passwordContainer: {
+  flexDirection: "row",
+  alignItems: "center",
+  borderWidth: 1,
+  borderColor: "#50bcff",
+  borderRadius: 12,
+  paddingHorizontal: 14,
+  height: 52,
+  marginBottom: 18,
+},
+
+passwordInput: {
+  flex: 1,
+  fontSize: 15,
+},
+
 
 
 });
