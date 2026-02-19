@@ -45,6 +45,53 @@ export default function ParentRegisterScreen() {
             </Text>
           </View>
 
+          <View style={styles.formWrapper}>
+            <View style={styles.form}>
+              {input("account", "Parent Name", "Enter your full name")}
+              {input("email-outline", "Email", "Enter your email")}
+              {input("phone-outline", "Phone Number", "Enter phone number")}
+
+              {input(
+                "account-child-outline",
+                "Student Name",
+                "Enter child’s name",
+                false,
+                scrollRef,
+                150
+              )}
+
+              {input(
+                "school-outline",
+                "Current Class",
+                "e.g. Grade 5A",
+                false,
+                scrollRef,
+                200
+              )}
+
+              {input(
+                "lock-outline",
+                "Password",
+                "Create password",
+                true,
+                scrollRef,
+                300
+              )}
+
+              {input(
+                "lock-check-outline",
+                "Confirm Password",
+                "Re-enter password",
+                true,
+                scrollRef,
+                350
+              )}
+
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Register</Text>
+              </TouchableOpacity>
+            </View>
+
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -121,6 +168,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+   form: {
+    backgroundColor: "#fff",
+    borderRadius: 18,
+    padding: 18,
+    elevation: 10,
+  },
+
   field: {
     marginBottom: 14,
   },
@@ -149,5 +203,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#000",
   },
+
+  button: {
+    backgroundColor: "#5AA9E6",
+    height: 48,
+    borderRadius: 14,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
+  },
+
 
 });
