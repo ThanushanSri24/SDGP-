@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: -70,
   },
   greeting: { fontSize: 18, color: "#555" },
   name: { fontSize: 28, fontWeight: "bold", color: "#000" },
