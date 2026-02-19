@@ -1,5 +1,11 @@
 import React from "react";
 import { Image } from "react-native";
+import { useState } from "react";
+import { TextInput } from "react-native";
+const [newPassword, setNewPassword] = useState("");
+const [confirmPassword, setConfirmPassword] = useState("");
+
+
 import {
   SafeAreaView,
   View,
@@ -23,6 +29,29 @@ export default function ConfirmPassword() {
       Your Identity has been verified{"\n"}
       Set your new password
     </Text>
+
+    <View style={styles.form}>
+
+  <TextInput
+    placeholder="New Password"
+    placeholderTextColor="#9CA3AF"
+    secureTextEntry
+    style={styles.input}
+    value={newPassword}
+    onChangeText={setNewPassword}
+  />
+
+  <TextInput
+    placeholder="Confirm Password"
+    placeholderTextColor="#9CA3AF"
+    secureTextEntry
+    style={styles.input}
+    value={confirmPassword}
+    onChangeText={setConfirmPassword}
+  />
+
+</View>
+
       </View>
     </SafeAreaView>
   );
@@ -57,5 +86,20 @@ subtitle: {
   textAlign: "center",
   marginBottom: 30,
 },
+
+form: {
+  width: "100%",
+},
+
+input: {
+  height: 52,
+  borderWidth: 1,
+  borderColor: "#50bcff",
+  borderRadius: 12,
+  paddingHorizontal: 14,
+  fontSize: 15,
+  marginBottom: 18,
+},
+
 
 });
