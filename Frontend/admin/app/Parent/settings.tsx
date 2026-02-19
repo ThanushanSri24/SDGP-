@@ -57,20 +57,75 @@ export default function SettingsScreen() {
         <SettingItem
           icon="map-outline"
           label="Route & Map Settings"
-          onPress={() => {}}
+          onPress={() => toggleSection("Route")}
         />
 
+        {openSection === "Route" && (
+          <View style={styles.dropdownContainer}>
+            <Text style={styles.policyText}>
+              1. GPS tracking is provided for monitoring the vehicle location in
+              real time.
+            </Text>
+
+            <Text style={styles.policyText}>
+              2. Location data is collected only for safety and transport
+              monitoring purposes.
+            </Text>
+
+            <Text style={styles.policyText}>
+              3. Map information may sometimes be delayed or inaccurate due to
+              network or technical issues.
+            </Text>
+            <Text style={styles.policyText}>
+              4. Parents must not misuse the tracking system or share live
+              location data without permission.
+            </Text>
+            <Text style={styles.policyText}>
+              5. The company is not responsible for delays caused by traffic,
+              weather, or other unavoidable circumstances.
+            </Text>
+          </View>
+        )}
+
         <Text style={styles.sectionTitle}>Support & Legal</Text>
-        <SettingItem
-          icon="help-circle-outline"
-          label="Help & Support"
-          onPress={() => {}}
-        />
-        <SettingItem
-          icon="shield-checkmark-outline"
-          label="Privacy Policy"
-          onPress={() => toggleSection("privacy")}
-        />
+        <>
+          <SettingItem
+            icon="help-circle-outline"
+            label="Help & Support"
+            onPress={() => toggleSection("Help")}
+          />
+          {openSection === "Help" && (
+            <View style={styles.dropdownContainer}>
+              <Text style={styles.policyText}>
+                1. Parents can contact Help & Support through the Parent Portal
+                for questions or issues.
+              </Text>
+
+              <Text style={styles.policyText}>
+                2. All communication must be respectful and sent through
+                official channels. service purposes.
+              </Text>
+
+              <Text style={styles.policyText}>
+                3. Parents must ensure their child is ready at pickup time and
+                inform the company about any special needs.
+              </Text>
+              <Text style={styles.policyText}>
+                4. Refund and cancellation requests must follow company policy
+                and be submitted in writing.
+              </Text>
+              <Text style={styles.policyText}>
+                5. All personal and tracking information will be kept secure and
+                used only for safety purposes.
+              </Text>
+            </View>
+          )}
+          <SettingItem
+            icon="shield-checkmark-outline"
+            label="Privacy Policy"
+            onPress={() => toggleSection("privacy")}
+          />
+        </>
         {openSection === "privacy" && (
           <View style={styles.dropdownContainer}>
             <Text style={styles.policyText}>
