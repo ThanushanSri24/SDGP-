@@ -60,8 +60,11 @@ export default function VerifyScreen() {
       </TouchableOpacity>
 
       <View style={styles.codeRow}>
-        <Text style={styles.codeText}>Didn't Get the Code? </Text>
-        <TouchableOpacity onPress={handleResend}>
+        <Text style={styles.codeText}>
+          Didn't Get the Code?{" "}
+        </Text>
+      
+        <TouchableOpacity onPress={() => console.log("Resend The Code")}>
           <Text style={styles.resendCode}>Resend Code</Text>
         </TouchableOpacity>
       </View>
@@ -93,32 +96,36 @@ const styles = StyleSheet.create({
     width: "60%",
     height: 50,
     borderWidth: 1,
-    borderColor: "#50bcffff",
+    borderColor:  "#50bcffff",
     borderRadius: 10,
     fontSize: 19,
     marginBottom: 30,
-    marginTop: 15,
+    marginTop:15,
   },
   button: {
-    backgroundColor: "#50bcffff",
+    backgroundColor:  "#50bcffff",
     width: "100%",
     paddingVertical: 14,
     borderRadius: 10,
     alignItems: "center",
     marginBottom: 15,
   },
+  
   buttonText: {
     color: "#1b0202",
     fontSize: 16,
     fontWeight: "bold",
   },
+
   codeRow: {
     flexDirection: "row",
     justifyContent: "center",
   },
+
   codeText: {
     color: "#6B7280",
   },
+
   resendCode: {
     color: "#50bcffff",
     fontWeight: "700",
