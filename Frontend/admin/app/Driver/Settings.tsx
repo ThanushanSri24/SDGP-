@@ -26,6 +26,26 @@ export default function SettingsScreen() {
   );
 }
 
+function SettingItem({
+  icon,
+  label,
+  onPress,
+}: {
+  icon: any;
+  label: string;
+  onPress: () => void;
+}) {
+  return (
+    <TouchableOpacity style={styles.item} onPress={onPress}>
+      <View style={styles.itemLeft}>
+        <Ionicons name={icon} size={20} color="#111827" />
+        <Text style={styles.itemLabel}>{label}</Text>
+      </View>
+      <Ionicons name="chevron-forward" size={16} color="#9CA3AF" />
+    </TouchableOpacity>
+  );
+}
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -52,4 +72,24 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginHorizontal: 16,
   },
+
+  item: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  paddingVertical: 12,
+  paddingHorizontal: 16,
+  borderBottomWidth: 1,
+  borderBottomColor: "#F3F4F6",
+},
+itemLeft: {
+  flexDirection: "row",
+  alignItems: "center",
+},
+itemLabel: {
+  marginLeft: 8,
+  fontSize: 16,
+  color: "#111827",
+},
+
 });
