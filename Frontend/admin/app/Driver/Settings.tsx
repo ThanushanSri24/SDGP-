@@ -30,10 +30,14 @@ function SettingItem({
   icon,
   label,
   onPress,
+  showBadge = false,
+  badgeCount,
 }: {
   icon: any;
   label: string;
   onPress: () => void;
+  showBadge?: boolean;
+  badgeCount?: string;
 }) {
   return (
     <TouchableOpacity style={styles.item} onPress={onPress}>
@@ -41,7 +45,14 @@ function SettingItem({
         <Ionicons name={icon} size={20} color="#111827" />
         <Text style={styles.itemLabel}>{label}</Text>
       </View>
-      <Ionicons name="chevron-forward" size={16} color="#9CA3AF" />
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        {showBadge && badgeCount && (
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{badgeCount}</Text>
+          </View>
+        )}
+        <Ionicons name="chevron-forward" size={16} color="#9CA3AF" />
+      </View>
     </TouchableOpacity>
   );
 }
@@ -90,6 +101,19 @@ itemLabel: {
   marginLeft: 8,
   fontSize: 16,
   color: "#111827",
+},
+
+badge: {
+  backgroundColor: "#FEF3C7",
+  borderRadius: 10,
+  paddingHorizontal: 6,
+  paddingVertical: 2,
+  marginRight: 8,
+},
+badgeText: {
+  fontSize: 12,
+  fontWeight: "600",
+  color: "#D97706",
 },
 
 });
