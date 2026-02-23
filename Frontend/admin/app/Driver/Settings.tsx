@@ -24,82 +24,63 @@ export default function SettingsScreen() {
           <View style={{ width: 24 }} />
         </View>
 
-        {/* Account Section */}
         <Text style={styles.sectionTitle}>Account Settings</Text>
-
         <SettingItem
           icon="person-outline"
-          label="Profile"
-          onPress={() => console.log("Profile")}
+          label="Edit Profile"
+            onPress={() => {}}
         />
-
         <SettingItem
           icon="lock-closed-outline"
           label="Change Password"
-          onPress={() => console.log("Password")}
+          onPress={() => {}}
+        />
+        <SettingItem
+          icon="card-outline"
+          label="Payment & Bank Details"
+           onPress={() => {}}
         />
 
-        {/* App Preferences */}
         <Text style={styles.sectionTitle}>App Preferences</Text>
-
         <SettingItem
           icon="notifications-outline"
-          label="Notifications"
-          showBadge
-          badgeCount="2"
-          onPress={() => console.log("Notifications")}
+          label="Notification Preferences"
+          onPress={() => {}}
+          showBadge={true}
+          badgeCount="1"
+        />
+        <SettingItem
+          icon="map-outline"
+          label="Route & Map Settings"
+            onPress={() => {}}
         />
 
-        {/* Support */}
         <Text style={styles.sectionTitle}>Support & Legal</Text>
-
         <SettingItem
           icon="help-circle-outline"
-          label="Help Center"
-          onPress={() => console.log("Help")}
+          label="Help & Support"
+            onPress={() => {}}
+        />
+        <SettingItem
+          icon="shield-checkmark-outline"
+          label="Privacy Policy"
+          onPress={() => {}}
+        />
+        <SettingItem
+          icon="document-text-outline"
+          label="Terms of Service"
+          onPress={() => {}}
         />
 
         {/* Logout Button */}
-        <TouchableOpacity
-          style={styles.logoutButton}
-          onPress={() => console.log("Logout pressed")}
-        >
+        <TouchableOpacity style={styles.logoutButton} onPress={() => {
+          // Handle logout logic here
+          console.log("Logout pressed");
+        }}>
           <Text style={styles.logoutText}>Log Out</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
-  );
-}
-
-function SettingItem({
-  icon,
-  label,
-  onPress,
-  showBadge = false,
-  badgeCount,
-}: {
-  icon: any;
-  label: string;
-  onPress: () => void;
-  showBadge?: boolean;
-  badgeCount?: string;
-}) {
-  return (
-    <TouchableOpacity style={styles.item} onPress={onPress}>
-      <View style={styles.itemLeft}>
-        <Ionicons name={icon} size={20} color="#111827" />
-        <Text style={styles.itemLabel}>{label}</Text>
-      </View>
-
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        {showBadge && badgeCount && (
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>{badgeCount}</Text>
-          </View>
-        )}
-        <Ionicons name="chevron-forward" size={16} color="#9CA3AF" />
-      </View>
-    </TouchableOpacity>
   );
 }
 
@@ -133,19 +114,25 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 12,
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 9,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#F3F4F6",
   },
-  itemLeft: {
+  itemLeft: { 
     flexDirection: "row",
     alignItems: "center",
+    flex: 1,
   },
   itemLabel: {
     marginLeft: 8,
     fontSize: 16,
     color: "#111827",
+  },
+  itemRight: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   badge: {
     backgroundColor: "#FEF3C7",
@@ -153,6 +140,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 2,
     marginRight: 8,
+    minWidth: 20,
+    alignItems: "center",
   },
   badgeText: {
     fontSize: 12,
@@ -160,16 +149,65 @@ const styles = StyleSheet.create({
     color: "#D97706",
   },
   logoutButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 32,
     marginHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 12,
-    backgroundColor: "#5AA9E6",
-    alignItems: "center",
+    borderWidth: 1,
+    borderColor:  "#5AA9E6",
+    backgroundColor:  "#5AA9E6",
   },
   logoutText: {
+    marginLeft: -15,
     fontSize: 16,
-    color: "#FFFFFF",
+    color: "#f1e9e9",
     fontWeight: "500",
   },
+
+  iconCircle: {
+    backgroundColor: "#a5d6fb", 
+    width: 36,
+    height: 36,
+    borderRadius: 18,           
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 4,             
+  },
 });
+
+function SettingItem({
+  icon,
+  label,
+  onPress,
+  showBadge = false,
+  badgeCount,
+}: {
+  icon: any;
+  label: string;
+  onPress: () => void;
+  showBadge?: boolean;
+  badgeCount?: string;
+}) {
+  return (
+    <TouchableOpacity style={styles.item} onPress={onPress}>
+      <View style={styles.itemLeft}>
+        <View style={styles.iconCircle}>
+          <Ionicons name={icon} size={20} color="#FFFFFF" />
+        </View>
+        <Text style={styles.itemLabel}>{label}</Text>
+      </View>
+      <View style={styles.itemRight}>
+        {showBadge && badgeCount && (
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{badgeCount}</Text>
+          </View>
+        )}
+        <Ionicons name="chevron-forward" size={16} color="#9CA3AF" />
+      </View>
+    </TouchableOpacity>
+);
+  
+}
