@@ -4,6 +4,7 @@
 const ROLES = {
     DRIVER: 'driver',
     PARENT: 'parent',
+    ADMIN: 'admin',
 };
 
 // Firestore collection names

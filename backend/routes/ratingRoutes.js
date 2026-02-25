@@ -5,10 +5,14 @@ const {
     submitRating,
     getDriverRatings,
     getVansOnRoute,
-    canRateDriver
+    canRateDriver,
+    getAllRatings,
 } = require('../controllers/ratingController');
 
-// POST /api/ratings/submit - Submit driver rating
+// GET /api/ratings - All ratings (optional ?stars=4 and/or ?driverId=abc filters)
+router.get('/', getAllRatings);
+
+// POST /api/ratings/submit - Submit a 3-criteria driver rating
 router.post('/submit', submitRating);
 
 // GET /api/ratings/driver/:driverId - Get driver's ratings

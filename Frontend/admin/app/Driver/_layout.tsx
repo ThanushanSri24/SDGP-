@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { Map, Users, Megaphone, User } from "lucide-react-native";
+import { Map, Megaphone, DollarSign, ClipboardList, User } from "lucide-react-native";
 
 export default function TabLayout() {
   return (
@@ -20,17 +20,46 @@ export default function TabLayout() {
         },
       }}
     >
-      
+      {/* ── Visible Tabs (5 only) ── */}
+      <Tabs.Screen
+        name="DriverMap"
+        options={{
+          title: "Map",
+          tabBarIcon: ({ color }) => <Map color={color} size={24} />,
+        }}
+      />
       <Tabs.Screen
         name="DriverAlert"
         options={{
           title: "Alerts",
-          tabBarIcon: ({ color, size }) => (
-            <Megaphone color={color} size={24} />
-          ),
+          tabBarIcon: ({ color }) => <Megaphone color={color} size={24} />,
         }}
       />
-      
+      <Tabs.Screen
+        name="Payment"
+        options={{
+          title: "Payment",
+          tabBarIcon: ({ color }) => <DollarSign color={color} size={24} />,
+        }}
+      />
+      <Tabs.Screen
+        name="Absense"
+        options={{
+          title: "Attendance",
+          tabBarIcon: ({ color }) => <ClipboardList color={color} size={24} />,
+        }}
+      />
+      <Tabs.Screen
+        name="DriverProfile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color }) => <User color={color} size={24} />,
+        }}
+      />
+
+      {/* ── Hidden Tabs (not shown in tab bar) ── */}
+      <Tabs.Screen name="index" options={{ href: null }} />
+      <Tabs.Screen name="explore" options={{ href: null }} />
     </Tabs>
   );
 }

@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -9,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import MapView, { Marker } from "react-native-maps";
 
@@ -106,7 +106,7 @@ export default function HomeScreen() {
               }}
             >
               <Marker coordinate={vanLocation}>
-                <View style={styles.vanMarker}>
+                <View style={{ backgroundColor: "#1a237e", borderRadius: 20, padding: 6 }}>
                   <Ionicons name="bus" size={24} color="#fff" />
                 </View>
               </Marker>
@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: -70,
   },
   greeting: { fontSize: 18, color: "#555" },
   name: { fontSize: 28, fontWeight: "bold", color: "#000" },
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 8,
+    marginTop: 20,
   },
   vanLabel: { fontSize: 14, color: "#555" },
   vanTimeBadge: {
@@ -209,16 +210,9 @@ const styles = StyleSheet.create({
   liveButtonText: { color: "#fff", fontWeight: "600" },
   map: {
     width: "100%",
-    height: 200,
+    height: 400,
     marginTop: 20,
     borderRadius: 12,
-  },
-  vanMarker: {
-    backgroundColor: "#007AFF",
-    padding: 8,
-    borderRadius: 20,
-    borderWidth: 2,
-    borderColor: "#fff",
   },
   liveBadge: {
     flexDirection: "row",

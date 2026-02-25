@@ -287,9 +287,52 @@ const canRateDriver = async (req, res) => {
     }
 };
 
+/**
+ * GET /api/ratings
+ * Returns all ratings with optional filters: ?stars=4 and/or ?driverId=abc
+ * Used by the Parent "Rate Driver" screen to display rating history.
+ */
+const getAllRatings = async (req, res) => {
+    const { stars, driverId } = req.query;
+
+    try {
+        let query = db.collection(COLLECTIONS.RATINGS);
+
+        if (driverId) {
+            query = query.where('driverId', '==', driverId);
+        }
+
+        const snapshot = await query.get();
+        let ratings = [];
+        snapshot.forEach((doc) => ratings.push({ id: doc.id, ...doc.data() }));
+
+        // Filter by overall star rating client-side to avoid composite index requirement
+        if (stars) {
+            const starsNum = Number(stars);
+            ratings = ratings.filter((r) => Math.round(r.overall) === starsNum);
+        }
+
+        // Sort newest first — handles both Firestore Timestamp and ISO string
+        ratings.sort((a, b) => {
+            const toMs = (v) => {
+                if (!v) return 0;
+                if (typeof v.toDate === 'function') return v.toDate().getTime();
+                return new Date(v).getTime();
+            };
+            return toMs(b.createdAt) - toMs(a.createdAt);
+        });
+
+        res.status(200).json({ success: true, ratings });
+    } catch (error) {
+        console.error('GET /api/ratings error:', error);
+        res.status(500).json({ success: false, message: 'Error fetching ratings', details: error.message });
+    }
+};
+
 module.exports = {
     submitRating,
     getDriverRatings,
     getVansOnRoute,
     canRateDriver,
+    getAllRatings,
 };
