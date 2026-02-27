@@ -6,7 +6,8 @@ import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { getAuth } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebaseConfig"; // adjusted path since had an error
+ // adjusted path since had an error
+import { db } from "../../firebaseConfig";
 import { Clock, TrafficCone, Wrench, Cloud, AlertCircle, CheckCircle, LucideIcon } from "lucide-react-native";
 
 interface QuickAlert {
