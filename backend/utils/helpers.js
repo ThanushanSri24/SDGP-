@@ -1,36 +1,23 @@
 // utils/helpers.js - General utility functions
 
-<<<<<<< HEAD
-=======
 /**
  * Capitalize first letter of a string
  * @param {string} str - Input string
  * @returns {string} - Capitalized string
  */
->>>>>>> e086e83 (refactor: modularize backend into config, controllers, services, routes, middleware, and utils)
 const capitalizeFirst = (str) => {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-<<<<<<< HEAD
-=======
 /**
  * Generate a unique ID
  * @returns {string} - Unique ID
  */
->>>>>>> e086e83 (refactor: modularize backend into config, controllers, services, routes, middleware, and utils)
 const generateUniqueId = () => {
     return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 };
 
-<<<<<<< HEAD
-const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371;
-    const dLat = toRad(lat2 - lat1);
-    const dLon = toRad(lon2 - lon1);
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-=======
 /**
  * Calculate distance between two GPS coordinates (Haversine formula)
  * @param {number} lat1 - Latitude of point 1
@@ -45,7 +32,6 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const dLon = toRad(lon2 - lon1);
     const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
->>>>>>> e086e83 (refactor: modularize backend into config, controllers, services, routes, middleware, and utils)
         Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -54,14 +40,6 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 
 const toRad = (deg) => deg * (Math.PI / 180);
 
-<<<<<<< HEAD
-const isWithinRadius = (point, center, radiusKm) => {
-    const distance = calculateDistance(point.latitude, point.longitude, center.latitude, center.longitude);
-    return distance <= radiusKm;
-};
-
-module.exports = { capitalizeFirst, generateUniqueId, calculateDistance, isWithinRadius };
-=======
 /**
  * Check if a point is within a radius of another point
  * @param {Object} point - { latitude, longitude }
@@ -85,4 +63,3 @@ module.exports = {
     calculateDistance,
     isWithinRadius,
 };
->>>>>>> e086e83 (refactor: modularize backend into config, controllers, services, routes, middleware, and utils)

@@ -1,9 +1,9 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
+import { AuthProvider } from '../context/AuthContext';
 import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
 import { useEffect } from 'react';
-import messaging from '@react-native-firebase/messaging';
+// import messaging from '@react-native-firebase/messaging';
 import { Alert, Platform } from 'react-native';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -20,6 +20,7 @@ const API_BASE_URL = Platform.select({
 
 // Request notification permission
 async function requestUserPermission() {
+  /*
   const authStatus = await messaging().requestPermission();
   const enabled =
     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
@@ -31,15 +32,18 @@ async function requestUserPermission() {
   }
   console.log('Notification permission denied');
   return false;
+  */
+  return false;
 }
 
 // Get FCM token and register with backend
 async function registerFCMToken(userId: string, role: 'driver' | 'parent') {
+  /*
   try {
     const token = await messaging().getToken();
     if (token) {
       console.log('FCM Token:', token);
-      
+
       // Register token with your backend
       const response = await fetch(`${API_BASE_URL}/api/register-token`, {
         method: 'POST',
@@ -50,18 +54,19 @@ async function registerFCMToken(userId: string, role: 'driver' | 'parent') {
           fcmToken: token,
         }),
       });
-      
+
       if (response.ok) {
         console.log('FCM token registered successfully');
       } else {
         console.error('Failed to register FCM token:', await response.text());
       }
-      
+
       return token;
     }
   } catch (error) {
     console.log('Error getting FCM token:', error);
   }
+  */
   return null;
 }
 
@@ -70,10 +75,12 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
+  console.log("RootLayout mounting...");
   const colorScheme = useColorScheme();
 
   useEffect(() => {
-    // Initialize Firebase messaging
+    // Initialize Firebase messaging - DISABLED FOR EXPO GO COMPATIBILITY
+    /*
     const initializeMessaging = async () => {
       const hasPermission = await requestUserPermission();
       if (hasPermission) {
@@ -87,7 +94,7 @@ export default function RootLayout() {
     // Handle foreground messages
     const unsubscribeForeground = messaging().onMessage(async remoteMessage => {
       console.log('Foreground message received:', remoteMessage);
-      
+
       // Show alert for foreground notifications
       Alert.alert(
         remoteMessage.notification?.title || 'Notification',
@@ -112,18 +119,22 @@ export default function RootLayout() {
       unsubscribeForeground();
       unsubscribeTokenRefresh();
     };
+    */
   }, []);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="RoleSelectionScreen" options={{ headerShown: false }} />
-        <Stack.Screen name="Driver" options={{ headerShown: false }} />
-        <Stack.Screen name="Parent" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="RoleSelectionScreen" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="Driver" options={{ headerShown: false }} />
+          <Stack.Screen name="Parent" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </AuthProvider>
   );
 }

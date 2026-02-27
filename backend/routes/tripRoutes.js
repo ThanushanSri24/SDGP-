@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-// routes/tripRoutes.js
-const express = require('express');
-const router = express.Router();
-const { handleStartTrip, handleEndTrip, getTripStatus, getDriverActiveTrip, handleUpdateStop } = require('../controllers/tripController');
-
-router.post('/start', handleStartTrip);
-router.post('/end', handleEndTrip);
-router.get('/status/:tripId', getTripStatus);
-router.get('/active/:driverId', getDriverActiveTrip);
-=======
 // routes/tripRoutes.js - Trip management routes
 const express = require('express');
 const router = express.Router();
@@ -33,7 +22,6 @@ router.get('/status/:tripId', getTripStatus);
 router.get('/active/:driverId', getDriverActiveTrip);
 
 // POST /api/trips/update-stop - Update child pickup/dropoff status
->>>>>>> e086e83 (refactor: modularize backend into config, controllers, services, routes, middleware, and utils)
 router.post('/update-stop', handleUpdateStop);
 
 module.exports = router;

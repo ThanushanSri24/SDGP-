@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-// controllers/locationController.js - GPS and proximity tracking
-const { db } = require('../config/firebase');
-const { COLLECTIONS } = require('../utils/constants');
-const { updateDriverLocation, getDriverLocation, checkProximity, estimateArrivalTime } = require('../services/locationService');
-=======
 // controllers/locationController.js - GPS and proximity tracking logic
 const { db } = require('../config/firebase');
 const { COLLECTIONS } = require('../utils/constants');
@@ -14,26 +8,11 @@ const {
     checkStopsProximity,
     estimateArrivalTime
 } = require('../services/locationService');
->>>>>>> e086e83 (refactor: modularize backend into config, controllers, services, routes, middleware, and utils)
 const { getActiveTrip } = require('../services/tripService');
 const { sendProximityNotification } = require('../services/notificationService');
 const { isValidLocation } = require('../utils/validators');
 const { Expo } = require('../config/expo');
 
-<<<<<<< HEAD
-const notifiedStops = new Map();
-
-const handleLocationUpdate = async (req, res) => {
-    const { driverId, latitude, longitude } = req.body;
-    if (!driverId || latitude === undefined || longitude === undefined) return res.status(400).json({ error: 'Missing fields' });
-    if (!isValidLocation({ latitude, longitude })) return res.status(400).json({ error: 'Invalid coordinates' });
-
-    try {
-        const activeTrip = await getActiveTrip(driverId);
-        const location = await updateDriverLocation(driverId, { latitude, longitude }, activeTrip?.tripId);
-        res.status(200).json({ success: true, location, activeTripId: activeTrip?.tripId || null });
-    } catch (error) {
-=======
 // Track notified stops to avoid duplicate notifications (in-memory, would use Redis in production)
 const notifiedStops = new Map();
 
@@ -82,34 +61,10 @@ const handleLocationUpdate = async (req, res) => {
 
     } catch (error) {
         console.error('Error updating location:', error);
->>>>>>> e086e83 (refactor: modularize backend into config, controllers, services, routes, middleware, and utils)
         res.status(500).json({ error: 'Failed to update location', details: error.message });
     }
 };
 
-<<<<<<< HEAD
-const getLocation = async (req, res) => {
-    const location = await getDriverLocation(req.params.driverId);
-    if (!location) return res.status(404).json({ error: 'Location not found' });
-    res.status(200).json({ success: true, location });
-};
-
-const getVanLocationForParent = async (req, res) => {
-    const { childId } = req.params;
-    const { parentId } = req.query;
-    try {
-        const childDoc = await db.collection(COLLECTIONS.CHILDREN).doc(childId).get();
-        if (!childDoc.exists) return res.status(404).json({ error: 'Child not found' });
-        const childData = childDoc.data();
-        if (parentId && childData.parentId !== parentId) return res.status(403).json({ error: 'Access denied' });
-
-        const activeTrip = await getActiveTrip(childData.driverId);
-        if (!activeTrip) return res.status(200).json({ success: true, tripActive: false, message: 'No active trip' });
-
-        const location = await getDriverLocation(childData.driverId);
-        res.status(200).json({ success: true, tripActive: true, tripId: activeTrip.tripId, location });
-    } catch (error) {
-=======
 /**
  * Check proximity and send notifications to parents
  */
@@ -205,14 +160,10 @@ const getLocation = async (req, res) => {
 
     } catch (error) {
         console.error('Error fetching location:', error);
->>>>>>> e086e83 (refactor: modularize backend into config, controllers, services, routes, middleware, and utils)
         res.status(500).json({ error: 'Failed to fetch location', details: error.message });
     }
 };
 
-<<<<<<< HEAD
-module.exports = { handleLocationUpdate, getLocation, getVanLocationForParent };
-=======
 /**
  * Get van location for a parent (via their child)
  * GET /api/location/van/:childId
@@ -276,4 +227,3 @@ module.exports = {
     getLocation,
     getVanLocationForParent,
 };
->>>>>>> e086e83 (refactor: modularize backend into config, controllers, services, routes, middleware, and utils)

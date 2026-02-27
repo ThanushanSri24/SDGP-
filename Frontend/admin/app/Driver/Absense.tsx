@@ -50,12 +50,12 @@ export default function App() {
         <FlatList data={STUDENTS} renderItem={({ item }) => <StudentCard item={item} />} keyExtractor={it => it.id} contentContainerStyle={{paddingBottom: 80}} />
         <TouchableOpacity style={styles.fab}><Plus color="black" size={32} /></TouchableOpacity>
       </View>
-      <View style={styles.bottomNav}>
-        <NavButton icon={<Map size={24} />} label="Route" color="#3B82F6" />
+      {/* <View style={styles.bottomNav}> */}
+        {/* <NavButton icon={<Map size={24} />} label="Route" color="#3B82F6" />
         <NavButton icon={<Users size={24} />} label="Students" color="#3B82F6" active />
         <NavButton icon={<Bell size={24} />} label="Alerts" color="#3B82F6" />
-        <NavButton icon={<UserCircle size={24} />} label="Profile" color="#3B82F6" />
-      </View>
+        <NavButton icon={<UserCircle size={24} />} label="Profile" color="#3B82F6" /> */}
+      {/* </View> */}
     </SafeAreaView>
   );
 }
