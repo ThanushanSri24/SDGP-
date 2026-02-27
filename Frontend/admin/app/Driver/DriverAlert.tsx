@@ -6,7 +6,8 @@ import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { getAuth } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebaseConfig"; // adjust path if needed
+ // adjusted path since had an error
+import { db } from "../../firebaseConfig";
 import { Clock, TrafficCone, Wrench, Cloud, AlertCircle, CheckCircle, LucideIcon } from "lucide-react-native";
 
 interface QuickAlert {
@@ -16,11 +17,11 @@ interface QuickAlert {
     message: string;
 }
 
-// ─── IMPORTANT: Replace with your PC's local IP ───────────────────────────
-// Run `ipconfig` (Windows) or `ifconfig` (Mac/Linux) to find it
-// Example: "http://192.168.1.42:5000"
+//  IMPORTANT: Replace with PC's local IP 
+// Run `ipconfig` to get the ip
+
 const BACKEND_URL = "http://10.31.27.120:5000";
-// ──────────────────────────────────────────────────────────────────────────
+// 
 
 // Configure how notifications should be handled when app is in the foreground
 Notifications.setNotificationHandler({
@@ -150,7 +151,7 @@ export default function DriverAlert() {
         setIsSending(true);
 
         try {
-            // ── Send to backend ─────────────────────────────────────────────
+            // ── Send to backend ─
             const response = await fetch(`${BACKEND_URL}/api/sos/trigger`, {
                 method: "POST",
                 headers: {

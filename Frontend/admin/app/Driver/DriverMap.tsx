@@ -91,15 +91,15 @@ export default function DriverMap() {
   ];
 
   // Get stops in correct order based on route type
-  const stops = routeType === "dropoff"
-    ? [...allStops].reverse()
+  const stops = routeType === "dropoff" 
+    ? [...allStops].reverse() 
     : allStops;
 
   // Function to send notification when student is picked up/dropped off
   const sendStopNotification = async (stop: Stop) => {
     console.log(`Sending notification for stop: ${stop.name}`);
     console.log(`Students at this stop: ${stop.students.join(", ")}`);
-
+    
     const studentNames = stop.students.join(", ");
     const actionText = routeType === "pickup" ? "pickup" : "drop-off";
     Alert.alert(
@@ -112,11 +112,11 @@ export default function DriverMap() {
   // Function to send notification when route is complete
   const sendRouteCompleteNotification = async () => {
     console.log(`Sending 'route complete' notification for ${routeType}`);
-
-    const message = routeType === "pickup"
+    
+    const message = routeType === "pickup" 
       ? "All parents have been notified that students arrived at school"
       : "All parents have been notified that students have been dropped off";
-
+    
     Alert.alert(
       "Route Complete",
       message,
@@ -165,7 +165,7 @@ export default function DriverMap() {
     setShowRouteTypeModal(false);
     setRouteStarted(true);
     setCurrentStop(0);
-
+    
     // Animate to first stop based on route type
     const firstStop = type === "dropoff" ? allStops[allStops.length - 1] : allStops[0];
     mapRef.current?.animateToRegion(
@@ -185,7 +185,7 @@ export default function DriverMap() {
     if (currentStop < stops.length - 1) {
       const nextStopIndex = currentStop + 1;
       setCurrentStop(nextStopIndex);
-
+      
       // Animate to next stop
       mapRef.current?.animateToRegion(
         {
@@ -432,14 +432,15 @@ export default function DriverMap() {
                 longitude: stop.longitude,
               }}
               title={stop.name}
-              description={`${stop.students.length} student${stop.students.length !== 1 ? "s" : ""
-                } • ${stop.time}`}
+              description={`${stop.students.length} student${
+                stop.students.length !== 1 ? "s" : ""
+              } • ${stop.time}`}
               pinColor={
                 index === currentStop && routeStarted
                   ? "#2563EB"
                   : stop.students.length === 0
-                    ? "#10B981"
-                    : "#EF4444"
+                  ? "#10B981"
+                  : "#EF4444"
               }
               onPress={() => focusOnStop(stop)}
             >
@@ -455,8 +456,8 @@ export default function DriverMap() {
                       index === currentStop && routeStarted
                         ? "#2563EB"
                         : stop.students.length === 0
-                          ? "#10B981"
-                          : "#EF4444",
+                        ? "#10B981"
+                        : "#EF4444",
                     paddingHorizontal: 12,
                     paddingVertical: 8,
                     borderRadius: 20,
@@ -495,8 +496,8 @@ export default function DriverMap() {
                       index === currentStop && routeStarted
                         ? "#2563EB"
                         : stop.students.length === 0
-                          ? "#10B981"
-                          : "#EF4444",
+                        ? "#10B981"
+                        : "#EF4444",
                   }}
                 />
               </View>
@@ -741,9 +742,7 @@ export default function DriverMap() {
           <TouchableOpacity
             onPress={() => {
               const currentStopData = stops[currentStop];
-              // Safety check for currentStopData
-              if (!currentStopData) return;
-
+              
               // Mark stop complete and send notifications
               if (currentStopData.students.length > 0) {
                 // This is a pickup/dropoff stop with students
@@ -756,7 +755,7 @@ export default function DriverMap() {
               }
             }}
             style={{
-              backgroundColor: currentStop === stops.length - 1
+              backgroundColor: currentStop === stops.length - 1 
                 ? (routeType === "pickup" ? "#60A5FA" : "#FDE68A")
                 : (routeType === "pickup" ? "#60A5FA" : "#FDE68A"),
               borderRadius: 12,
@@ -782,8 +781,9 @@ export default function DriverMap() {
                 ? routeType === "pickup"
                   ? "✓ Arrived at School - Complete Route"
                   : "✓ All Students Dropped Off - Complete Route"
-                : `✓ ${routeType === "pickup" ? "Picked Up" : "Dropped Off"} ${stops[currentStop]?.students.length || 0} Student${(stops[currentStop]?.students.length || 0) !== 1 ? "s" : ""
-                }`}
+                : `✓ ${routeType === "pickup" ? "Picked Up" : "Dropped Off"} ${stops[currentStop]?.students.length} Student${
+                    stops[currentStop]?.students.length !== 1 ? "s" : ""
+                  }`}
             </Text>
           </TouchableOpacity>
         </View>
