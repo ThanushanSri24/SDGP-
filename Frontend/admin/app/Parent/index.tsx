@@ -264,8 +264,9 @@ const styles = StyleSheet.create({
   },
   timelineTitle: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "700",
     marginBottom: 12,
+    color: "#1F2937",
   },
   timelineRow: {
     flexDirection: "row",
