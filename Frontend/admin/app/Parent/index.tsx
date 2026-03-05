@@ -13,7 +13,7 @@ import {
 import MapView, { Marker } from "react-native-maps";
 
 export default function HomeScreen() {
-  // ✅ Driver phone number (static for now)
+  //Added driver call function(phone number static for now)
   const driverPhoneNumber = "+94702920962";
   const handleCallDriver = () => {
     Linking.openURL(`tel:${driverPhoneNumber}`);
