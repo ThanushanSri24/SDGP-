@@ -16,7 +16,11 @@ export default function HomeScreen() {
   //Added driver call function(phone number static for now)
   const driverPhoneNumber = "+94702920962";
   const handleCallDriver = () => {
-    Linking.openURL(`tel:${driverPhoneNumber}`);
+    const handleCallDriver = () => {
+      Linking.openURL(`tel:${driverPhoneNumber}`).catch(() =>
+        console.log("Unable to open dialer")
+      );
+    };
   };
 
   const router = useRouter();
