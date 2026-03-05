@@ -34,18 +34,16 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      {/* BACK BUTTON */}
+
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
         <Text style={styles.backText}>‹</Text>
       </TouchableOpacity>
 
       <View style={styles.container}>
-        {/* TITLE */}
         <Text style={styles.title}>
           Welcome back! Glad{"\n"}to see you, Again!
         </Text>
 
-        {/* EMAIL */}
         <TextInput
           placeholder="Enter your email"
           placeholderTextColor="#9CA3AF"
@@ -56,7 +54,6 @@ export default function LoginScreen() {
           autoCapitalize="none"
         />
 
-        {/* PASSWORD */}
         <View style={styles.passwordContainer}>
           <TextInput
             placeholder="Enter your password"
@@ -78,24 +75,20 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* FORGOT PASSWORD */}
         <TouchableOpacity onPress={() => router.push("/SendMail")}>
           <Text style={styles.forgotText}>Forgot Password?</Text>
         </TouchableOpacity>
 
-        {/* LOGIN BUTTON */}
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin} disabled={isLoading}>
           <Text style={styles.loginText}>{isLoading ? "Logging in..." : "Login"}</Text>
         </TouchableOpacity>
 
-        {/* OR LOGIN WITH */}
         <View style={styles.orRow}>
           <View style={styles.line} />
           <Text style={styles.orText}>Or login with</Text>
           <View style={styles.line} />
         </View>
 
-        {/* SOCIAL BUTTONS */}
         <View style={styles.socialRow}>
           <TouchableOpacity style={styles.socialButton}>
             <FontAwesome name="facebook" size={22} color="#1877F2" />
@@ -114,8 +107,6 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-
-        {/* REGISTER */}
         <View style={styles.registerRow}>
           <Text style={styles.registerText}>
             Don’t have an account?{" "}
@@ -148,6 +139,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
   backText: {
     fontSize: 20,
     fontWeight: "600",
@@ -184,6 +176,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     height: 52,
   },
+
   passwordInput: {
     flex: 1,
     fontSize: 15,
@@ -208,6 +201,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 35,
   },
+
   loginText: {
     color: "#0f0101ff",
     fontSize: 16,
@@ -238,6 +232,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 24,
   },
+
   socialButton: {
     flex: 1,
     height: 52,
@@ -248,10 +243,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 6,
   },
+
   socialText: {
     fontSize: 18,
     fontWeight: "700",
   },
+
   registerRow: {
     flexDirection: "row",
     justifyContent: "center",
@@ -266,4 +263,4 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-});
+
