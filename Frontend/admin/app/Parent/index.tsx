@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
   },
   callButton: {
     marginTop: 20,
-    backgroundColor: "#93C5FD",
+    backgroundColor: "#60A5FA",
     paddingVertical: 12,
     borderRadius: 10,
     alignItems: "center",
