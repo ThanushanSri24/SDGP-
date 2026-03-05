@@ -140,6 +140,7 @@ export default function HomeScreen() {
 
           {/* Call Driver Button */}
           <TouchableOpacity
+            accessibilityLabel="Call the van driver"
             style={styles.callButton}
             onPress={handleCallDriver}
           >
