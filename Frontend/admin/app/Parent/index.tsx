@@ -84,7 +84,7 @@ export default function HomeScreen() {
             onPress={() => setShowMap(!showMap)}
           >
             <Text style={styles.liveButtonText}>
-              {showMap ? "Hide Live Tracking" : "Show Live Tracking"}
+              📍 {showMap ? "Hide Live Tracking" : "Show Live Tracking"}
             </Text>
           </TouchableOpacity>
 
