@@ -24,5 +24,64 @@ export default function LoginScreen() {
       alert("Please enter both email and password");
       return;
     }
-  }
+
+        try {
+      await login(email, password, 'driver');
+      router.replace('/Driver');
+    } catch (error: any) {
+      alert(error.message || "Login failed");
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.safe}>
+      {/* BACK BUTTON */}
+      <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+        <Text style={styles.backText}>‹</Text>
+      </TouchableOpacity>
+
+      <View style={styles.container}>
+        {/* TITLE */}
+        <Text style={styles.title}>
+          Welcome back! Glad{"\n"}to see you, Again!
+        </Text>
+      </View>
+    </SafeAreaView>
+  );
 }
+
+const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+
+  backButton: {
+    marginLeft: 23,
+    marginTop: 40,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  backText: {
+    fontSize: 20,
+    fontWeight: "600",
+  },
+
+  container: {
+    paddingHorizontal: 24,
+    marginTop: 30,
+  },
+
+  title: {
+    fontSize: 26,
+    fontWeight: "700",
+    marginBottom: 40,
+    color: "#111827",
+  },
+
+  });
