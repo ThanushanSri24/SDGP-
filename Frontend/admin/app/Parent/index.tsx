@@ -110,7 +110,7 @@ export default function HomeScreen() {
               <Marker coordinate={vanLocation}>
                 <Image
                   source={require("../../assets/images/van.png")}
-                  style={{ width: 40, height: 40 }}
+                  style={styles.vanMarker}
                   resizeMode="contain"
                 />
               </Marker>
@@ -200,6 +200,10 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 20,
+  },
+  vanMarker: {
+    width: 40,
+    height: 40,
   },
   vanTimeText: { color: "#166534", fontWeight: "600", fontSize: 13 },
   liveButton: {
