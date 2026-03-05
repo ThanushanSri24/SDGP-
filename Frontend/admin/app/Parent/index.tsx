@@ -30,12 +30,11 @@ export default function HomeScreen() {
 
   const now = new Date();
   const hour = now.getHours();
-  const greeting =
-    hour >= 17
-      ? "Good Evening"
-      : hour >= 12
-      ? "Good Afternoon"
-      : "Good Morning";
+  const greeting = () => {
+    if (hour >= 17) return "Good Evening";
+    if (hour >= 12) return "Good Afternoon";
+    return "Good Morning";
+  };
 
   const todayDate = now.toLocaleDateString("en-US", {
     weekday: "long",
@@ -53,7 +52,7 @@ export default function HomeScreen() {
         {/* Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.greeting}>{greeting}!</Text>
+            <Text style={styles.greeting}>{greeting()}!</Text>
             <Text style={styles.name}>Amana</Text>
             <Text style={styles.date}>{todayDate}</Text>
           </View>
