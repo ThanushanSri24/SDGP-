@@ -45,6 +45,36 @@ export default function LoginScreen() {
         <Text style={styles.title}>
           Welcome back! Glad{"\n"}to see you, Again!
         </Text>
+
+        {/* EMAIL */}
+        <TextInput
+          placeholder="Enter your email"
+          placeholderTextColor="#9CA3AF"
+          style={styles.input}
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+        />
+
+        {/* PASSWORD */}
+        <View style={styles.passwordContainer}>
+          <TextInput
+            placeholder="Enter your password"
+            placeholderTextColor="#9CA3AF"
+            secureTextEntry={!showPassword}
+            style={styles.passwordInput}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            <Ionicons
+              name={showPassword ? "eye-off" : "eye"}
+              size={22}
+              color="#6B7280"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -82,6 +112,31 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginBottom: 40,
     color: "#111827",
+  },
+
+  input: {
+    height: 52,
+    borderWidth: 1,
+    borderColor: "#5AA9E6",
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    fontSize: 15,
+    marginBottom: 18,
+  },
+
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#5AA9E6",
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    height: 52,
+  },
+  
+  passwordInput: {
+    flex: 1,
+    fontSize: 15,
   },
 
   });
