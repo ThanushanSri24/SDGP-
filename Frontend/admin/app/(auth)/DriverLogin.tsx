@@ -74,6 +74,29 @@ export default function LoginScreen() {
               color="#6B7280"
             />
           </TouchableOpacity>
+
+                  {/* FORGOT PASSWORD */}
+        <TouchableOpacity onPress={() => router.push("/SendMail")}>
+          <Text style={styles.forgotText}>Forgot Password?</Text>
+        </TouchableOpacity>
+
+        {/* LOGIN BUTTON */}
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={handleLogin}
+          disabled={isLoading}
+        >
+          <Text style={styles.loginText}>
+            {isLoading ? "Logging in..." : "Login"}
+          </Text>
+        </TouchableOpacity>
+
+        {/* OR LOGIN WITH */}
+        <View style={styles.orRow}>
+          <View style={styles.line} />
+          <Text style={styles.orText}>Or login with</Text>
+          <View style={styles.line} />
+        </View>
         </View>
       </View>
     </SafeAreaView>
@@ -133,10 +156,54 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     height: 52,
   },
-  
+
   passwordInput: {
     flex: 1,
     fontSize: 15,
+  },
+
+  eyeText: {
+    fontSize: 18,
+  },
+
+  forgotText: {
+    textAlign: "right",
+    fontWeight: "600",
+    marginVertical: 14,
+    marginTop: 15,
+  },
+
+  loginButton: {
+    height: 54,
+    borderRadius: 14,
+    backgroundColor: "#5AA9E6",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 35,
+  },
+  loginText: {
+    color: "#0f0101ff",
+    fontSize: 16,
+    fontWeight: "700",
+  },
+
+  orRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 20,
+  },
+
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "#E5E7EB",
+  },
+  
+  orText: {
+    marginHorizontal: 10,
+    color: "#6B7280",
+    fontSize: 13,
+    fontWeight: "500",
   },
 
   });
