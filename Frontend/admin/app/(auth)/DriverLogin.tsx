@@ -35,7 +35,6 @@ export default function LoginScreen() {
   return (
     <SafeAreaView style={styles.safe}>
 
-      {/* Added the Back Button */}
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
         <Text style={styles.backText}>‹</Text>
       </TouchableOpacity>
@@ -45,7 +44,6 @@ export default function LoginScreen() {
           Welcome back! Glad{"\n"}to see you, Again!
         </Text>
 
-        {/* Added the Email */}
         <TextInput
           placeholder="Enter your email"
           placeholderTextColor="#9CA3AF"
@@ -56,7 +54,6 @@ export default function LoginScreen() {
           autoCapitalize="none"
         />
 
-        {/* Added the Password */}
         <View style={styles.passwordContainer}>
           <TextInput
             placeholder="Enter your password"
@@ -78,12 +75,10 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Added the Forgot Password */}
         <TouchableOpacity onPress={() => router.push("/SendMail")}>
           <Text style={styles.forgotText}>Forgot Password?</Text>
         </TouchableOpacity>
 
-        {/* Added the Login Button */}
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin} disabled={isLoading}>
           <Text style={styles.loginText}>{isLoading ? "Logging in..." : "Login"}</Text>
         </TouchableOpacity>
@@ -94,7 +89,6 @@ export default function LoginScreen() {
           <View style={styles.line} />
         </View>
 
-        {/* Added the Social Buttons */}
         <View style={styles.socialRow}>
           <TouchableOpacity style={styles.socialButton}>
             <FontAwesome name="facebook" size={22} color="#1877F2" />
@@ -113,8 +107,6 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-
-        {/* Redirecting to the ParentRegister.tsx */}
         <View style={styles.registerRow}>
           <Text style={styles.registerText}>
             Don’t have an account?{" "}
@@ -256,7 +248,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
   },
-  
+
   registerRow: {
     flexDirection: "row",
     justifyContent: "center",
@@ -271,4 +263,4 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-});
+
