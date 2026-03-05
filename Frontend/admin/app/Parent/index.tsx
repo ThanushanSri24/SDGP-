@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  greeting: { fontSize: 18, color: "#555" },
+  greeting: { fontSize: 18, color: "#374151" },
   name: { fontSize: 28, fontWeight: "bold", color: "#000" },
   date: { fontSize: 14, color: "#666" },
   routeButton: {
