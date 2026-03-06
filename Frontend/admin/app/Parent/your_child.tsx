@@ -50,6 +50,7 @@ export default function YourChild() {
     parentContact: "0771234567",
   });
 
+  // Track which field is currently being edited
   const [editingField, setEditingField] = useState<keyof ChildInfoType | null>(
     null
   );
