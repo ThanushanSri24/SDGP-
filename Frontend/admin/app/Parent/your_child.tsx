@@ -39,6 +39,7 @@ export default function YourChild() {
     ]);
   };
 
+  // State storing editable child information
   const [childInfo, setChildInfo] = useState<ChildInfoType>({
     studentName: "Amana",
     school: "Musaeus College",
