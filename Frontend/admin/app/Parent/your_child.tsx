@@ -12,6 +12,7 @@ import {
   View,
 } from "react-native";
 
+// Type definition for child information
 type ChildInfoType = {
   studentName: string;
   school: string;
