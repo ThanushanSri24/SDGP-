@@ -1,7 +1,26 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Linking, ScrollView } from "react-native";
+
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
+type ChildInfoType = {
+  studentName: string;
+  school: string;
+  routeNumber: string;
+  driver: string;
+  pickup: string;
+  dropoff: string;
+  parentContact: string;
+};
 
 import {
   Alert,
@@ -26,10 +45,105 @@ type ChildInfoType = {
 export default function YourChild() {
   const navigation = useNavigation();
 
-  // Attendance state for marking present or absent
   const [attendance, setAttendance] = useState<"ABSENT" | "PRESENT" | null>(
-    null
+    null,
   );
+
+  const confirmAttendance = (type: "ABSENT" | "PRESENT") => {
+    Alert.alert("Confirm Attendance", `Are you sure your child is ${type}?`, [
+      { text: "Cancel", style: "cancel" },
+      { text: "OK", onPress: () => setAttendance(type) },
+    ]);
+  };
+
+  const [childInfo, setChildInfo] = useState<ChildInfoType>({
+    studentName: "Amana",
+    school: "Musaeus College",
+    routeNumber: "R-05",
+    driver: "Mr. Sunil Perera",
+    pickup: "123 Main St, Colombo",
+    dropoff: "456 Park Ave, Colombo",
+    parentContact: "0771234567",
+  });
+
+  const [editingField, setEditingField] = useState<keyof ChildInfoType | null>(
+    null,
+  );
+  // ⭐ DRIVER RATING STATE
+  const [driverRating, setDriverRating] = useState(0);
+  const [lastRatedDate, setLastRatedDate] = useState<Date | null>(null);
+  const [canRateDriver, setCanRateDriver] = useState(true);
+
+  const checkDriverRatingEligibility = () => {
+    if (!lastRatedDate) {
+      setCanRateDriver(true);
+      return;
+    }
+    const now = new Date();
+    const diffDays =
+      (now.getTime() - lastRatedDate.getTime()) / (1000 * 60 * 60 * 24);
+    setCanRateDriver(diffDays >= 90);
+  };
+
+  const submitDriverRating = useCallback((value: number) => {
+    if (!canRateDriver) return;
+    setDriverRating(value);
+    setLastRatedDate(new Date());
+    setCanRateDriver(false);
+    Alert.alert("Thank you", `You rated the driver ${value} stars`);
+    // TODO: save to database here
+  }, [canRateDriver]);
+
+  const handleStarPress = useCallback(
+    (star: number) => {
+      submitDriverRating(star);
+    },
+    [submitDriverRating],
+  );
+
+  useEffect(() => {
+    checkDriverRatingEligibility();
+  }, [lastRatedDate]);
+
+  const InfoRow = ({
+    label,
+    field,
+    editable = true,
+  }: {
+    label: string;
+    field: keyof ChildInfoType;
+    editable?: boolean;
+  }) => {
+    const isEditing = editingField === field;
+
+    return (
+      <View style={styles.infoRow}>
+        <Text style={styles.infoLabel}>{label}</Text>
+
+        {isEditing ? (
+          <TextInput
+            style={styles.input}
+            value={childInfo[field]}
+            onChangeText={(text) =>
+              setChildInfo({ ...childInfo, [field]: text })
+            }
+            onBlur={() => setEditingField(null)}
+            autoFocus
+          />
+        ) : (
+          <View style={styles.valueRow}>
+            <Text style={styles.infoValue}>{childInfo[field]}</Text>
+
+            {editable && (
+              <TouchableOpacity onPress={() => setEditingField(field)}>
+                <Ionicons name="create-outline" size={18} color="#666" />
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
+      </View>
+    );
+  };
 
   // Confirm attendance before updating state
   const confirmAttendance = (type: "ABSENT" | "PRESENT") => {
@@ -152,11 +266,7 @@ export default function YourChild() {
 
         <InfoRow label="Student Name" field="studentName" />
         <InfoRow label="School" field="school" />
-        <InfoRow
-          label="Assign route Number"
-          field="routeNumber"
-          editable={false}
-        />
+        <InfoRow label="Assign route Number" field="routeNumber" editable={false} />
         <InfoRow label="Assigned Driver" field="driver" editable={false} />
         <InfoRow label="Pickup Location" field="pickup" />
         <InfoRow label="Drop-off Location" field="dropoff" />
@@ -164,18 +274,18 @@ export default function YourChild() {
       </View>
 
       {/* DRIVER CARD */}
-      {/* Driver information and contact section */}
       <View style={styles.driverCard}>
         <Text style={styles.driverTitle}>Assigned Driver</Text>
         <Text style={styles.driverName}>{childInfo.driver}</Text>
         <Text style={styles.driverInfo}>Vehicle: Van</Text>
         {/* replace with real data */}
         <Text style={styles.driverInfo}>Number: WP R-1234</Text>
+      
 
         {/* replace with real data */}
         <TouchableOpacity
           style={styles.callButton}
-          onPress={() => Linking.openURL(`tel:0766141046`)} // replace with real driver phone
+          onPress={() => Linking.openURL(`tel:0779876543`)} // replace with real driver phone
         >
           <Text style={styles.callText}>Call Driver</Text>
         </TouchableOpacity>
@@ -250,7 +360,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 10,
     backgroundColor: "#ECECEC",
-    marginRight: 12,
+    marginRight: 10,
   },
 
   presentActive: {
@@ -268,7 +378,7 @@ const styles = StyleSheet.create({
 
   infoCard: {
     backgroundColor: "#FCF4BA",
-    borderRadius: 18,
+    borderRadius: 16,
     padding: 16,
     marginTop: 18,
     borderWidth: 1,
