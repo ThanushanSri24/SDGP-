@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 10,
     backgroundColor: "#ECECEC",
-    marginRight: 10,
+    marginRight: 12,
   },
 
   presentActive: {
