@@ -31,6 +31,7 @@ export default function YourChild() {
     null
   );
 
+  // Confirm attendance before updating state
   const confirmAttendance = (type: "ABSENT" | "PRESENT") => {
     Alert.alert("Confirm Attendance", `Are you sure your child is ${type}?`, [
       { text: "Cancel", style: "cancel" },
