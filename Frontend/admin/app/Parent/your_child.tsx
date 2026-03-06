@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
 
   infoCard: {
     backgroundColor: "#FCF4BA",
-    borderRadius: 16,
+    borderRadius: 18,
     padding: 16,
     marginTop: 18,
     borderWidth: 1,
