@@ -164,6 +164,7 @@ export default function YourChild() {
       </View>
 
       {/* DRIVER CARD */}
+      {/* Driver information and contact section */}
       <View style={styles.driverCard}>
         <Text style={styles.driverTitle}>Assigned Driver</Text>
         <Text style={styles.driverName}>{childInfo.driver}</Text>
