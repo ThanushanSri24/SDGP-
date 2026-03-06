@@ -26,6 +26,7 @@ type ChildInfoType = {
 export default function YourChild() {
   const navigation = useNavigation();
 
+  // Attendance state for marking present or absent
   const [attendance, setAttendance] = useState<"ABSENT" | "PRESENT" | null>(
     null
   );
