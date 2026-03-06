@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Linking, ScrollView } from "react-native";
 
 import {
@@ -54,44 +54,6 @@ export default function YourChild() {
   const [editingField, setEditingField] = useState<keyof ChildInfoType | null>(
     null
   );
-  // ⭐ DRIVER RATING STATE
-  const [driverRating, setDriverRating] = useState(0);
-  const [lastRatedDate, setLastRatedDate] = useState<Date | null>(null);
-  const [canRateDriver, setCanRateDriver] = useState(true);
-
-  const checkDriverRatingEligibility = () => {
-    if (!lastRatedDate) {
-      setCanRateDriver(true);
-      return;
-    }
-    const now = new Date();
-    const diffDays =
-      (now.getTime() - lastRatedDate.getTime()) / (1000 * 60 * 60 * 24);
-    setCanRateDriver(diffDays >= 90);
-  };
-
-  const submitDriverRating = useCallback(
-    (value: number) => {
-      if (!canRateDriver) return;
-      setDriverRating(value);
-      setLastRatedDate(new Date());
-      setCanRateDriver(false);
-      Alert.alert("Thank you", `You rated the driver ${value} stars`);
-      // TODO: save to database here
-    },
-    [canRateDriver]
-  );
-
-  const handleStarPress = useCallback(
-    (star: number) => {
-      submitDriverRating(star);
-    },
-    [submitDriverRating]
-  );
-
-  useEffect(() => {
-    checkDriverRatingEligibility();
-  }, [lastRatedDate]);
 
   const InfoRow = ({
     label,
