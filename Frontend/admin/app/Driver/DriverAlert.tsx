@@ -20,7 +20,7 @@ interface QuickAlert {
 //  IMPORTANT: Replace with PC's local IP 
 // Run `ipconfig` to get the ip
 
-const BACKEND_URL = "http://10.31.27.120:5000";
+const BACKEND_URL = "http://192.168.1.8:5000";
 // 
 
 // Configure how notifications should be handled when app is in the foreground
