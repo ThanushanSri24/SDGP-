@@ -130,4 +130,49 @@ export default function ParentRegisterScreen() {
     }
   }
 
+      try {
+
+      // Create Firebase Auth account
+      await register(cleanEmail, password, "parent");
+
+      // If user exists, store parent data in Firestore
+      if (auth.currentUser) {
+
+        await setDoc(doc(db, "parents", auth.currentUser.uid), {
+
+          name: name.trim(),
+          email: cleanEmail,
+          phone: phone.trim(),
+
+          childName: childName.trim(),
+          childClass: childClass.trim(),
+
+          role: "parent",
+
+          // Assigned driver ID
+          assignedDriverId: selectedDriver,
+
+          // Store creation timestamp
+          createdAt: new Date().toISOString(),
+
+        });
+
+      }
+
+      // Navigate to Parent dashboard
+      router.replace("/Parent");
+
+    } catch (error: any) {
+
+      console.log("Registration error:", error);
+
+      Alert.alert(
+        "Registration Failed",
+        error.message || "Something went wrong"
+      );
+
+    }
+
+  };
+
 }
