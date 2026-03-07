@@ -48,4 +48,23 @@ export default function ParentRegisterScreen() {
   // Access register function and loading state from AuthContext
   const { register, isLoading } = useAuth();
 
+    // Parent details
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+
+  // Child details
+  const [childName, setChildName] = React.useState("");
+  const [childClass, setChildClass] = React.useState("");
+
+  // Password fields
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+
+  // Driver list fetched from database
+  const [drivers, setDrivers] = React.useState<any[]>([]);
+
+  // Selected driver ID
+  const [selectedDriver, setSelectedDriver] = React.useState("");
+
 }
