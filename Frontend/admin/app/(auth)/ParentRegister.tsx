@@ -165,7 +165,7 @@ export default function ParentRegisterScreen() {
       }
 
       // Navigate parent to Parent dashboard
-      router.replace("/Parent");
+      router.replace("/Parent/ParentAlert");
 
     } catch (error: any) {
 
