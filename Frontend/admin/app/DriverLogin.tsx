@@ -71,11 +71,7 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.socialButton}>
-          <Image
-            source={require("../assets/images/google.png")}
-            style={{ width: 40, height: 22 }}
-            resizeMode="contain"
-          />
+            <FontAwesome name="google" size={22} color="#DB4437" />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.socialButton}>
