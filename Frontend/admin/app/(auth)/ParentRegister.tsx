@@ -98,4 +98,36 @@ export default function ParentRegisterScreen() {
 
   }, []);
 
+    // Function to handle parent registration
+  const handleRegister = async () => {
+
+    // Clean email (remove spaces and make lowercase)
+    const cleanEmail = email.trim().toLowerCase();
+
+    // Check if required fields are filled
+    if (!name || !cleanEmail || !password || !confirmPassword || !selectedDriver) {
+      Alert.alert("Error", "Please fill in all required fields");
+      return;
+    }
+
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(cleanEmail)) {
+      Alert.alert("Error", "Please enter a valid email address");
+      return;
+    }
+
+    // Password confirmation check
+    if (password !== confirmPassword) {
+      Alert.alert("Error", "Passwords do not match");
+      return;
+    }
+
+    // Minimum password length check
+    if (password.length < 6) {
+      Alert.alert("Error", "Password must be at least 6 characters");
+      return;
+    }
+  }
+
 }
