@@ -139,11 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   
-  eyeText: {
-    fontSize: 18,
-  },
-
-   forgotText: {
+  forgotText: {
     textAlign: "right",
     fontWeight: "600",
     marginVertical: 14,
