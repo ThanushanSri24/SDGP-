@@ -35,7 +35,12 @@ export default function ParentRegisterScreen() {
         >
     
         <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={24} color="#111827" />
+            <Ionicons
+              name="arrow-back"
+              size={24}
+              color="#111827"
+              style={styles.backText}
+            />
         </TouchableOpacity>
 
           <View style={styles.header}>
