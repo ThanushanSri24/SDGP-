@@ -94,7 +94,7 @@ export default function ParentRegisterScreen() {
 
             <View style={styles.LoginRow}>
                 <Text style={styles.LoginText}>Already have an account? </Text>
-                <TouchableOpacity onPress={() => console.log("Go to Login")}>
+                <TouchableOpacity onPress={() => router.push("/ParentLogin")}>
                 <Text style={styles.LoginNow}>Login Now</Text>
                 </TouchableOpacity>
             </View>
