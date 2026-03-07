@@ -197,11 +197,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
   },
 
-  socialText: {
-    fontSize: 18,
-    fontWeight: "700",
-  },
-
   registerRow: {
     flexDirection: "row",
     justifyContent: "center",
