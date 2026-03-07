@@ -18,8 +18,8 @@ export default function LoginScreen() {
   return (
     <SafeAreaView style={styles.safe}>
      
-      <TouchableOpacity onPress={() => router.back()}>
-        <Ionicons name="arrow-back" size={24} color="#111827" />
+      <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+        <Ionicons style={styles.backText} name="arrow-back" size={24} color="#111827" />
       </TouchableOpacity>
 
       <View style={styles.container}>
