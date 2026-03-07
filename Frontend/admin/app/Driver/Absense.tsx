@@ -23,13 +23,13 @@ const StudentCard = ({ item }: any) => {
       </View>
 
       <View style={styles.statusSection}>
-        
+        {/* Badge */}
         <View style={[styles.statusBadge, { backgroundColor: badgeBackground }]}>
           <View style={[styles.dot, { backgroundColor: statusColor }]} />
           <Text style={[styles.statusText, { color: statusColor }]}>{statusLabel}</Text>
         </View>
 
-        
+        {/* Icon */}
         {isAbsent
           ? <AlertTriangle color="#EF4444" size={24} />
           : <CheckCircle2  color="#22C55E" size={24} />
