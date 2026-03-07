@@ -67,4 +67,35 @@ export default function ParentRegisterScreen() {
   // Selected driver ID
   const [selectedDriver, setSelectedDriver] = React.useState("");
 
+    // Fetch available drivers from Firestore
+  useEffect(() => {
+
+    const fetchDrivers = async () => {
+      try {
+
+        // Get driver collection
+        const snapshot = await getDocs(collection(db, "drivers"));
+
+        const driverList: any[] = [];
+
+        // Loop through drivers and push to array
+        snapshot.forEach((docItem) => {
+          driverList.push({
+            id: docItem.id,
+            ...docItem.data(),
+          });
+        });
+
+        // Save drivers into state
+        setDrivers(driverList);
+
+      } catch (error) {
+        console.log("Error fetching drivers:", error);
+      }
+    };
+
+    fetchDrivers();
+
+  }, []);
+
 }
