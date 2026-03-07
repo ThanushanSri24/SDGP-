@@ -1,7 +1,7 @@
 import { AlertTriangle, CheckCircle2, ChevronLeft, Search, User } from 'lucide-react-native';
 import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { getStudents } from '../../../../backend/backend-T/studentService';
+import { getStudents } from '../../../../backend/backend-T/studentService.js';
 
 const StudentCard = ({ item }: any) => {
   const isAbsent = item.status === 'Absent';
