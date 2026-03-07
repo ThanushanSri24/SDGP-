@@ -87,7 +87,10 @@ export default function ParentRegisterScreen() {
                 350
               )}
 
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => router.push("/(auth)/ParentRegister")}
+              >
                 <Text style={styles.buttonText}>Register</Text>
               </TouchableOpacity>
             </View>
