@@ -54,6 +54,36 @@ export default function LoginScreen() {
           onChangeText={setEmail}
           autoCapitalize="none"
         />
+
+                <View style={styles.passwordContainer}>
+          <TextInput
+            placeholder="Enter your password"
+            placeholderTextColor="#9CA3AF"
+            secureTextEntry={!showPassword}
+            style={styles.passwordInput}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+          >
+
+            <Ionicons
+              name={showPassword ? "eye-off" : "eye"}
+              size={22}
+              color="#6B7280"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity onPress={() => router.push("/SendMail")}>
+          <Text style={styles.forgotText}>Forgot Password?</Text>
+        </TouchableOpacity>
+{/*
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin} disabled={isLoading}>
+          <Text style={styles.loginText}>{isLoading ? "Logging in..." : "Login"}</Text>
+        </TouchableOpacity>*/ }
+
       </View>
     </SafeAreaView>
   );
@@ -103,5 +133,31 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 18,
   },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#5AA9E6",
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    height: 52,
+  },
+
+  passwordInput: {
+    flex: 1,
+    fontSize: 15,
+  },
+
+  eyeText: {
+    fontSize: 18,
+  },
+
+  forgotText: {
+    textAlign: "right",
+    fontWeight: "600",
+    marginVertical: 14,
+    marginTop: 15,
+  },
+
 
 });
