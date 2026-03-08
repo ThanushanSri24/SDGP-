@@ -84,6 +84,30 @@ export default function LoginScreen() {
           <Text style={styles.loginText}>{isLoading ? "Logging in..." : "Login"}</Text>
         </TouchableOpacity>*/ }
 
+                <View style={styles.orRow}>
+          <View style={styles.line} />
+          <Text style={styles.orText}>Or login with</Text>
+          <View style={styles.line} />
+        </View>
+
+        <View style={styles.socialRow}>
+          <TouchableOpacity style={styles.socialButton}>
+            <FontAwesome name="facebook" size={22} color="#1877F2" />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.socialButton}>
+            <Image
+              source={require("../../assets/images/google.png")}
+              style={{ width: 40, height: 22 }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.socialButton}>
+            <FontAwesome name="apple" size={22} color="#000000" />
+          </TouchableOpacity>
+        </View>
+
       </View>
     </SafeAreaView>
   );
@@ -158,6 +182,58 @@ const styles = StyleSheet.create({
     marginVertical: 14,
     marginTop: 15,
   },
+  loginButton: {
+    height: 54,
+    borderRadius: 14,
+    backgroundColor: "#5AA9E6",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 35,
+  },
+
+  loginText: {
+    color: "#0f0101ff",
+    fontSize: 16,
+    fontWeight: "700",
+  },
+
+  orRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 20,
+  },
+
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "#E5E7EB",
+  },
+
+  orText: {
+    marginHorizontal: 10,
+    color: "#6B7280",
+    fontSize: 13,
+    fontWeight: "500",
+  },
+
+  socialRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 24,
+  },
+
+  socialButton: {
+    flex: 1,
+    height: 52,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 6,
+  },
+
+ 
 
 
 });
