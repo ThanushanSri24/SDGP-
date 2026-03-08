@@ -205,7 +205,6 @@ export default function ParentRegisterScreen() {
           </View>
 
           <View style={styles.form}>
-
             {input("account", "Parent Name", "Enter your full name", false, scrollRef, 0, name, setName)}
             {input("email-outline", "Email", "Enter your email", false, scrollRef, 0, email, setEmail, true)}
             {input("phone-outline", "Phone Number", "Enter phone number", false, scrollRef, 0, phone, setPhone)}
@@ -226,7 +225,6 @@ export default function ParentRegisterScreen() {
                   onValueChange={(itemValue) => setSelectedDriver(itemValue)}
                 >
                   <Picker.Item label="Select a driver..." value="" />
-
                   {drivers.map((driver) => (
                     <Picker.Item
                       key={driver.id}
@@ -367,7 +365,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: "#FAFAFA",
   },
-
   button: {
     backgroundColor: "#5AA9E6",
     height: 48,

@@ -11,6 +11,18 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: "#86c7ef",
+        tabBarStyle: {
+          backgroundColor: "#ffffff", //bottom tab bar
+        },
+        tabBarInactiveTintColor: "#666",
+
+        headerStyle: {
+          backgroundColor: "#ffffff", // top header background
+        },
+        headerTitleStyle: {
+          color: "#000000", // header text color
+        },
+        headerTintColor: "#000000", // back button & icons
       }}
     >
       <Tabs.Screen
@@ -44,11 +56,24 @@ export default function TabLayout() {
       <Tabs.Screen
         name="ParentAlert"
         options={{
-          title: "Alerts",
-          headerTitle: "Alerts",
+          title: "Notifications",
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name={focused ? "notifications" : "notifications-outline"}
+              color={color}
+              size={24}
+            />
+          ),
+        }}
+      />
+      {/* Rate Driver */}
+      <Tabs.Screen
+        name="RateDriver"
+        options={{
+          title: "Rate Driver",
+          tabBarIcon: ({ focused, color }) => (
+            <Ionicons
+              name={focused ? "star" : "star-outline"}
               color={color}
               size={24}
             />
@@ -60,7 +85,6 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "Profile",
-          headerTitle: "Profile",
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name={focused ? "person" : "person-outline"}
