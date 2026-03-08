@@ -1,15 +1,14 @@
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import {
-  Image,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  Image
 } from "react-native";
 
 export default function LoginScreen() {
@@ -18,24 +17,19 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-     
+      
       <TouchableOpacity onPress={() => router.back()}>
         <Ionicons name="arrow-back" size={24} color="#111827" />
       </TouchableOpacity>
 
       <View style={styles.container}>
-        <Text style={styles.title}>
-          Welcome back! Glad{"\n"}to see you, Again!
-        </Text>
-
+        <Text style={styles.title}>Welcome back! Glad to see you, Again!</Text>
+        
         <TextInput
           placeholder="Enter your email"
           placeholderTextColor="#9CA3AF"
           style={styles.input}
           keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
         />
 
         <View style={styles.passwordContainer}>
@@ -44,22 +38,20 @@ export default function LoginScreen() {
             placeholderTextColor="#9CA3AF"
             secureTextEntry={!showPassword}
             style={styles.passwordInput}
-            value={password}
-            onChangeText={setPassword}
           />
+
           <TouchableOpacity
             onPress={() => setShowPassword(!showPassword)}
           >
-
             <Ionicons
               name={showPassword ? "eye-off" : "eye"}
               size={22}
               color="#6B7280"
-            />
+            /> 
           </TouchableOpacity>
-        </View>
+        </View>  
 
-        <TouchableOpacity>
+         <TouchableOpacity>
           <Text style={styles.forgotText}>Forgot Password?</Text>
         </TouchableOpacity>
 
@@ -72,18 +64,18 @@ export default function LoginScreen() {
           <Text style={styles.orText}>Or login with</Text>
           <View style={styles.line} />
         </View>
-
+ 
         <View style={styles.socialRow}>
           <TouchableOpacity style={styles.socialButton}>
             <FontAwesome name="facebook" size={22} color="#1877F2" />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.socialButton}>
-            <Image
-              source={require("../../assets/images/google.png")}
-              style={{ width: 40, height: 22 }}
-              resizeMode="contain"
-            />
+          <Image
+            source={require("../assets/images/google.png")}
+            style={{ width: 40, height: 22 }}
+            resizeMode="contain"
+          />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.socialButton}>
@@ -91,12 +83,14 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
+
+
         <View style={styles.registerRow}>
           <Text style={styles.registerText}>
             Don’t have an account?{" "}
           </Text>
 
-          <TouchableOpacity onPress={() => router.push("/ParentRegister")}>
+          <TouchableOpacity onPress={() => console.log("Go to Register")}>
             <Text style={styles.registerNow}>Register Now</Text>
           </TouchableOpacity>
         </View>
@@ -110,22 +104,6 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: "#FFFFFF",
-  },
-
-  backButton: {
-    marginLeft: 23,
-    marginTop: 40,
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: "#E5E7EB",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  backText: {
-    fontSize: 20,
-    fontWeight: "600",
   },
 
   container: {
@@ -145,12 +123,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#5AA9E6",
     borderRadius: 12,
-    paddingHorizontal: 14,
+    paddingHorizontal:14,
     fontSize: 15,
     marginBottom: 18,
   },
 
-  passwordContainer: {
+   passwordContainer: {
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
@@ -159,16 +137,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     height: 52,
   },
+
   passwordInput: {
     flex: 1,
     fontSize: 15,
   },
-
+  
   eyeText: {
     fontSize: 18,
   },
 
-  forgotText: {
+   forgotText: {
     textAlign: "right",
     fontWeight: "600",
     marginVertical: 14,
@@ -183,13 +162,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 35,
   },
+
   loginText: {
     color: "#0f0101ff",
     fontSize: 16,
     fontWeight: "700",
   },
 
-  orRow: {
+   orRow: {
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 20,
@@ -208,7 +188,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 
-  socialRow: {
+   socialRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 24,
@@ -243,5 +223,5 @@ const styles = StyleSheet.create({
     color: "#5AA9E6",
     fontWeight: "700",
   },
-
+  
 });
